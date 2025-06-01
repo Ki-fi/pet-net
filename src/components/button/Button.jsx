@@ -1,14 +1,21 @@
 import './Button.css';
+import Icon from "../icon/Icon.jsx";
 
-function Button({ variant, isDisabled, hasIconLeft, hasIconRight, onClick, buttonText}) {
+function Button({ iconName, variant, isDisabled, hasIconLeft, hasIconRight, onClick, buttonText}) {
     if(hasIconLeft) {
-        return <button>`${Icon} ${buttonText}`</button>;
+        return <button
+                    className={variant}
+                    disabled={isDisabled}
+                    onClick={onClick}
+                >{Icon({iconName})}{buttonText}</button>;
     }
-
-    if(hasIconRight) {
-        return <button>`${buttonText} ${Icon}`</button>;
+    else if(hasIconRight) {
+        return <button
+                    className={variant}
+                    disabled={isDisabled}
+                    onClick={onClick}
+                >{buttonText}{Icon({iconName})}</button>;
     }
-
     else {
         return (
             <button

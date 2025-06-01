@@ -6,9 +6,13 @@ button {
     letter-spacing: 1.25px;
     text-transform: uppercase;
     color: var(--Text-light);
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
     height: 42px;
     padding: 0 24px;
-    align-items: center;
     border-radius: 4px;
     border: 2px solid var(--Text-dark);
     box-shadow: 0 6px 0 0 var(--Text-dark);
