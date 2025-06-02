@@ -1,35 +1,22 @@
 import './App.css'
-import Button from "./components/button/Button.jsx";
+import BottomSheet from "./components/bottomSheet/BottomSheet.jsx";
 import Input from "./components/input/Input.jsx";
 
 function App() {
 
   return (
     <>
-        <Button
-            variant={"primary"}
-            isDisabled={false}
-            hasIconLeft={false}
-            hasIconRight={true}
-            iconName={"add"}
-            onClick={() => {}}
-            buttonText={"Primary Button"}
-        />
-        <Button
-            variant={"secondary"}
-            isDisabled={false}
-            hasIconLeft={false}
-            hasIconRight={false}
-            iconName={"add"}
-            onClick={() => {}}
-            buttonText={"Secondary Button"}
-        />
-        <br/>
-        <Input
-            variant={"light"}
-            label={"Input field"}
-            placeholderText={"Type something"}
-        />
+        <div className="login-page">
+            <div className="login-background"></div>
+            <BottomSheet title="Inloggen">
+                <p>Er is een inlogcode verstuurd naar example@email.com</p>
+                <Input
+                    variant={"dark"}
+                    label={"Inlogcode"}
+                    placeholderText={"Type something"}
+                />
+            </BottomSheet>
+        </div>
     </>
   )
 }

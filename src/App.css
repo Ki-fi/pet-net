@@ -12,15 +12,27 @@
 
 body {
   color: var(--Text-dark);
+  background-color: var(--Grey-light);
 }
 
-.default-body-text {
+p, .default-body-text {
   font-family: Roboto, sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 24px;
   letter-spacing: 0.5px;
+}
+
+.subheading {
+  font-family: "Midnight Sans RD";
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 32px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 0 0 16px 0;
 }
 
 .subtitle {
@@ -42,4 +54,17 @@ body {
   --Green-light: #A5B62B;
   --Green-dark: #35460E;
   --Green-highlight: #ABED62;
+  --Grey: #727371;
+  --Grey-light: #CAD5D6;
+}
+
+
+.login-background {
+  width: calc(100vw - 500px);
+  padding: 82px;
+  background-color: var(--Green-light);
+}
+
+.login-page {
+  display: flex;
 }
