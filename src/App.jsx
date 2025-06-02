@@ -26,6 +26,7 @@ function App() {
         />
         <br/>
         <Input
+            variant={"light"}
             label={"Input field"}
             placeholderText={"Type something"}
         />

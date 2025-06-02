@@ -1,11 +1,18 @@
 import "./Input.css";
 
-function Input({ label, placeholderText }) {
+function Input({ variant, label, placeholderText }) {
+    let colorScheme;
+    switch (variant) {
+        case "dark": colorScheme = "dark"; break;
+        case "light": colorScheme = "light"; break;
+        default: colorScheme = "light"; break;
+    }
+
     return (
-        <label className="subtitle">
+        <label className={`subtitle ${colorScheme}`}>
             {label}
             <input
-                className="default-body-text"
+                className={`default-body-text ${colorScheme}`}
                 type="text"
                 name={label}
                 placeholder={placeholderText}

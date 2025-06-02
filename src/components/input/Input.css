@@ -18,3 +18,11 @@ input:focus {
     border-color: #A5B62B;
     outline: none;
 }
+
+.light {
+    color: var(--Text-dark);
+}
+
+.dark {
+    color: var(--Text-light);
+}
