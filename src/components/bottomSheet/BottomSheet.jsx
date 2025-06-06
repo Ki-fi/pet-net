@@ -1,5 +1,8 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 import './BottomSheet.css';
 import Button from "../button/Button.jsx";
+
 
 function BottomSheet({ title, children}) {
     return (

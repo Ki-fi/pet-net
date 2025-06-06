@@ -58,6 +58,11 @@ p, .default-body-text {
   --Grey-light: #CAD5D6;
 }
 
+.login-page {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
 
 .login-background {
   flex: 1;
@@ -71,8 +76,8 @@ p, .default-body-text {
   object-fit: cover;
 }
 
-.login-page {
-  display: flex;
-  height: 100vh;
-  width: 100vw;
+@media screen and (max-width: 768px) {
+  .login-page {
+    flex-direction: column;
+  }
 }
