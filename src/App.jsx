@@ -1,13 +1,16 @@
 import './App.css'
 import BottomSheet from "./components/bottomSheet/BottomSheet.jsx";
 import Input from "./components/input/Input.jsx";
+import logo from "./assets/logo.png";
 
 function App() {
 
   return (
     <>
         <div className="login-page">
-            <div className="login-background"></div>
+            <div className="login-background">
+                <img src={logo} alt="logo"/>
+            </div>
             <BottomSheet title="Inloggen">
                 <p>Er is een inlogcode verstuurd naar example@email.com</p>
                 <Input

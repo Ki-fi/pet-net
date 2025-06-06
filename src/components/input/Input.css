@@ -19,10 +19,10 @@ input:focus {
     outline: none;
 }
 
-.light {
+input.light {
     color: var(--Text-dark);
 }
 
-.dark {
+input.dark {
     color: var(--Text-light);
 }

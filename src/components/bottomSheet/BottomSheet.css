@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    flex-grow: 1;
     background: var(--Grey);
     box-shadow: -8px 0 0 0 var(--Text-dark);
     color: var(--Text-light);
@@ -13,13 +12,13 @@
     padding: 24px;
 }
 
-.content {
+.bottom-sheet .content {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
-.buttons {
+.bottom-sheet .buttons {
     display: flex;
     padding: 24px;
     justify-content: center;
