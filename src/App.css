@@ -7,6 +7,14 @@
   box-sizing: border-box;
 }
 
+body {
+
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+}
 
 /*TYPOGRAPHY*/
 
@@ -43,6 +51,15 @@ p, .default-body-text {
   letter-spacing: 0.15px;
 }
 
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
 /*COLORS*/
 
 :root {
@@ -58,26 +75,18 @@ p, .default-body-text {
   --Grey-light: #CAD5D6;
 }
 
-.login-page {
+
+.feed {
   display: flex;
-  height: 100vh;
-  width: 100vw;
+  flex-basis: 800px;
+  padding: 12px;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.login-background {
-  flex: 1;
-  background-color: var(--Green-light);
-  overflow: hidden;
-}
 
-.login-background img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+
 
 @media screen and (max-width: 768px) {
-  .login-page {
-    flex-direction: column;
-  }
+
 }

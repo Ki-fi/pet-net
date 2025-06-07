@@ -1,26 +1,35 @@
 import './App.css'
-import BottomSheet from "./components/bottomSheet/BottomSheet.jsx";
-import Input from "./components/input/Input.jsx";
-import logo from "./assets/logo.png";
+import Card from "./components/card/Card.jsx";
+import Button from "./components/button/Button.jsx";
+
 
 function App() {
 
   return (
-    <>
-        <div className="login-page">
-            <div className="login-background">
-                <img src={logo} alt="logo"/>
-            </div>
-            <BottomSheet title="Inloggen">
-                <p>Er is een inlogcode verstuurd naar example@email.com</p>
-                <Input
-                    variant={"dark"}
-                    label={"Inlogcode"}
-                    placeholderText={"Type something"}
-                />
-            </BottomSheet>
-        </div>
-    </>
+      <>
+          <div className="feed">
+        <Card
+            title={"Titel"}
+            hasSubtitle={true}
+            subtitle={"Dit is een ondertitel"}
+            buttons={<Button
+                variant={"primary"}
+                buttonText="ACTION"
+            />
+            }
+        />
+          <Card
+              title={"Titel"}
+              hasSubtitle={true}
+              subtitle={"Dit is een ondertitel"}
+              buttons={<Button
+                  variant={"primary"}
+                  buttonText="ACTION"
+              />
+              }
+          />
+          </div>
+      </>
   )
 }
 
