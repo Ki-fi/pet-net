@@ -2,6 +2,7 @@ import './App.css'
 import Card from "./components/card/Card.jsx";
 import Button from "./components/button/Button.jsx";
 import SideMenu from "./components/side-menu/SideMenu.jsx";
+import PageBar from "./components/page-bar/PageBar.jsx";
 
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
       <>
           <div className="menu-wrapper"><SideMenu /></div>
               <div className="content">
+                  <div className="pagebar-wrapper"><PageBar pageTitle={"Buurtgroep"}/></div>
                   <div className="cards-wrapper">
                   <Card
                       title={"Titel"}
