@@ -3,6 +3,7 @@ import Card from "./components/card/Card.jsx";
 import Button from "./components/button/Button.jsx";
 import SideMenu from "./components/side-menu/SideMenu.jsx";
 import PageBar from "./components/page-bar/PageBar.jsx";
+import ToggleButton from "./components/toggle-button/ToggleButton.jsx";
 
 
 function App() {
@@ -13,6 +14,10 @@ function App() {
               <div className="content">
                   <div className="pagebar-wrapper"><PageBar pageTitle={"Buurtgroep"}/></div>
                   <div className="cards-wrapper">
+                  <ToggleButton
+                     buttonNameLeft={"Alle posts"}
+                     buttonNameRight={"Mijn posts"}
+                  />
                   <Card
                       title={"Titel"}
                       hasSubtitle={true}
