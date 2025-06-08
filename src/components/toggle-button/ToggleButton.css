@@ -15,8 +15,13 @@
     border-radius: 4px 0 0 4px;
 }
 
-
 .right {
     border-radius: 0 4px 4px 0;
+}
+
+.active {
+    background: var(--Green-light);
+    color: var(--Text-light);
+    cursor: default;
 }
 

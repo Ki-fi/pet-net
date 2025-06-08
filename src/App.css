@@ -30,7 +30,7 @@ p, .default-body-text {
 }
 
 .subheading {
-  font-family: "Midnight Sans RD";
+  font-family: "Midnight Sans RD", sans-serif;
   font-size: 28px;
   font-style: normal;
   font-weight: 900;
@@ -57,7 +57,7 @@ a:hover {
 }
 
 .material-symbols-outlined {
-  font-family: 'Material Symbols Outlined';
+  font-family: 'Material Symbols Outlined', sans-serif;
   font-variation-settings:
           'FILL' 0,
           'wght' 400,
@@ -112,8 +112,6 @@ a:hover {
   padding: 24px;
   gap: 16px;
 }
-
-
 
 
 @media screen and (max-width: 768px) {
