@@ -9,6 +9,7 @@ button {
 
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     flex-shrink: 0;
     height: 42px;
@@ -50,4 +51,15 @@ button:disabled {
 
 .secondary:disabled {
     background: #E5E5E5;
+}
+
+.fab {
+    border-radius: 56px;
+    background: var(--Blue-light);
+    width: 56px;
+    height: 56px;
+}
+
+.fab:hover {
+    background: #9AB6DF;
 }

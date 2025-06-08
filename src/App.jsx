@@ -20,45 +20,51 @@ function App() {
   return (
       <>
           <div className="menu-wrapper"><SideMenu /></div>
-              <div className="content">
-                  <div className="pagebar-wrapper"><PageBar pageTitle={"Buurtgroep"}/></div>
-                  <div className="cards-wrapper">
-                  <ToggleButton
-                     buttonNameLeft={"Alle posts"}
-                     buttonNameRight={"Mijn posts"}
-                  />
-                  <Card
-                      avatar={<Avatar />}
-                      title={"Adison George"}
-                      hasSubtitle={true}
-                      subtitle={"Dit is een ondertitel"}
-                      buttons={<Button
-                          variant={"primary"}
-                          buttonText="reageren"
-                      ></Button>
-                      }
-                  >
-                      <CardContent>
-                          <Chip chipText={"Kattenbak verschonen"}/>
-                      </CardContent>
-                  </Card>
-                  <Card
-                      avatar={<Avatar />}
-                      title={"Chap Workman"}
-                      hasSubtitle={true}
-                      subtitle={"Dit is een ondertitel"}
-                      buttons={<Button
-                          variant={"primary"}
-                          buttonText="reageren"
-                      />
-                      }
-                  >
-                      <CardContent>
-                          <Chip chipText={"Water verversen"}/>
-                      </CardContent>
-                  </Card>
+                  <div className="content">
+                      <PageBar pageTitle={"Buurtgroep"}/>
+                      <div className="cards-wrapper">
+                          <ToggleButton
+                              buttonNameLeft={"Alle posts"}
+                              buttonNameRight={"Mijn posts"}
+                          />
+                          <Card
+                              avatar={<Avatar />}
+                              title={"Adison George"}
+                              hasSubtitle={true}
+                              subtitle={"Dit is een ondertitel"}
+                              buttons={<Button
+                                  variant={"primary"}
+                                  buttonText="reageren"
+                              ></Button>
+                              }
+                          >
+                              <CardContent>
+                                  <Chip chipText={"Kattenbak verschonen"}/>
+                              </CardContent>
+                          </Card>
+                          <Card
+                              avatar={<Avatar />}
+                              title={"Chap Workman"}
+                              hasSubtitle={true}
+                              subtitle={"Dit is een ondertitel"}
+                              buttons={<Button
+                                  variant={"primary"}
+                                  buttonText="reageren"
+                              />}
+                          >
+                              <CardContent>
+                                  <Chip chipText={"Water verversen"}/>
+                              </CardContent>
+                          </Card>
+                      </div>
+                      <div className="footer">
+                          <Button
+                              variant="fab"
+                              hasIconLeft={true}
+                              iconName={"add"}
+                          />
+                      </div>
                   </div>
-              </div>
       </>
   )
 }
