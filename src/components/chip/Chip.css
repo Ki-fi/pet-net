@@ -1,0 +1,10 @@
+
+.chip {
+    display: inline-flex;
+    padding: 2px 12px;
+    align-items: center;
+    gap: 6px;
+    border-radius: 12px;
+    background: var(--Green-highlight);
+    color: var(--Green-dark);
+}

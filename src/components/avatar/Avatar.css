@@ -1,0 +1,13 @@
+
+.avatar {
+    width: 64px;
+    height: 64px;
+    border: 2px solid #464646;
+    aspect-ratio: 1/1;
+    border-radius: 50px;
+    background: rgba(121, 158, 213, 0.25);
+}
+
+.avatar img {
+    width: 100%;
+}

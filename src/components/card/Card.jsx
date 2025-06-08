@@ -1,9 +1,12 @@
 import './Card.css';
 
-function Card({ title, hasSubtitle, subtitle, children, buttons }) {
+function Card({ avatar, title, hasSubtitle, subtitle, children, buttons }) {
     return (
             <section className="card">
-                <h2 className="subheading">{title}</h2>
+                <div className="card-header">
+                    {avatar}
+                    <h2 className="subheading">{title}</h2>
+                </div>
                 {hasSubtitle && (<p className="subtitle">{subtitle}</p>)}
                 {children}
                 {buttons}

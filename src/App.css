@@ -29,6 +29,10 @@ p, .default-body-text {
   letter-spacing: 0.5px;
 }
 
+.body-text-small {
+  font-size: 14px;
+}
+
 .subheading {
   font-family: "Midnight Sans RD", sans-serif;
   font-size: 28px;

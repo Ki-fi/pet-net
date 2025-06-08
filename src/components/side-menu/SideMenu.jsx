@@ -29,7 +29,7 @@ function SideMenu() {
                     className={`menu-item ${selected === 'profiel' ? 'active' : ''}`}
                     onClick={() => handleItem('profiel', '/profiel')}
                 >
-                    <Icon iconName={"view_list"} />
+                    <Icon iconName={"account_circle"} />
                     <span className="subtitle">Profiel</span>
                 </li>
             </ul>
