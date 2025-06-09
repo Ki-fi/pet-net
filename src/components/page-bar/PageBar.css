@@ -1,0 +1,13 @@
+
+.page-bar {
+    display: flex;
+    flex-grow: 0;
+    padding: 24px 24px 12px 24px;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--Grey);
+    box-shadow: 0 8px 0 0 #464646;
+    color: var(--Text-light);
+    width: 100%;
+}
+

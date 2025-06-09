@@ -1,34 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Card from "./components/card/Card.jsx";
+import Button from "./components/button/Button.jsx";
+import SideMenu from "./components/side-menu/SideMenu.jsx";
+import PageBar from "./components/page-bar/PageBar.jsx";
+import ToggleButton from "./components/toggle-button/ToggleButton.jsx";
+import { Routes, Route } from 'react-router-dom';
+import Chip from "./components/chip/Chip.jsx";
+import CardContent from "./components/card-content/CardContent.jsx";
+import Avatar from "./components/avatar/Avatar.jsx";
+
+<Routes>
+<Route path="/buurtgroep" element={<div>Buurtgroep Page</div>} />
+<Route path="/profiel" element={<div>Buurtgroep Page</div>} />
+</Routes>
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <>
+          <div className="menu-wrapper"><SideMenu /></div>
+                  <div className="content">
+                      <PageBar pageTitle={"Buurtgroep"}/>
+                      <div className="cards-wrapper">
+                          <ToggleButton
+                              buttonNameLeft={"Alle posts"}
+                              buttonNameRight={"Mijn posts"}
+                          />
+                          <Card
+                              avatar={<Avatar />}
+                              title={"Adison George"}
+                              hasSubtitle={true}
+                              subtitle={"Dit is een ondertitel"}
+                              buttons={<Button
+                                  variant={"primary"}
+                                  buttonText="reageren"
+                              ></Button>
+                              }
+                          >
+                              <CardContent>
+                                  <Chip chipText={"Kattenbak verschonen"}/>
+                              </CardContent>
+                          </Card>
+                          <Card
+                              avatar={<Avatar />}
+                              title={"Chap Workman"}
+                              hasSubtitle={true}
+                              subtitle={"Dit is een ondertitel"}
+                              buttons={<Button
+                                  variant={"primary"}
+                                  buttonText="reageren"
+                              />}
+                          >
+                              <CardContent>
+                                  <Chip chipText={"Water verversen"}/>
+                              </CardContent>
+                          </Card>
+                      </div>
+                      <div className="footer">
+                          <Button
+                              variant="fab"
+                              hasIconLeft={true}
+                              iconName={"add"}
+                          />
+                      </div>
+                  </div>
+      </>
   )
 }
 

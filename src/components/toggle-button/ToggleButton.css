@@ -1,0 +1,27 @@
+
+.button-wrapper {
+    display: flex;
+}
+
+.toggle-button {
+    background: #E5E5E5;
+    color: var(--Text-dark);
+    display: flex;
+    justify-content: center;
+    flex: 1 0 0;
+}
+
+.left {
+    border-radius: 4px 0 0 4px;
+}
+
+.right {
+    border-radius: 0 4px 4px 0;
+}
+
+.active {
+    background: var(--Green-light);
+    color: var(--Text-light);
+    cursor: default;
+}
+
