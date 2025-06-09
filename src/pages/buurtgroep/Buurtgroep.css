@@ -1,0 +1,48 @@
+
+.buurtgroep-page {
+    display: flex;
+}
+
+.menu-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.cards-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    height: 100%;
+    padding: 24px;
+    gap: 16px;
+    overflow: auto;
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    max-width: 800px;
+    width: 100%;
+    margin-bottom: 16px
+}
+
+
+@media screen and (max-width: 768px) {
+
+}
