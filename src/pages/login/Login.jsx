@@ -3,6 +3,7 @@ import Input from "/src/components/input/Input.jsx";
 import logo from "/src/assets/logo.png";
 import Button from "../../components/button/Button.jsx";
 import './Login.css';
+import {Link} from "react-router-dom";
 
 function Login() {
 
@@ -12,14 +13,27 @@ function Login() {
                 <div className="login-background">
                     <img src={logo} alt="logo"/>
                 </div>
-                <Drawer title="Inloggen">
-                    <p>Er is een inlogcode verstuurd naar example@email.com</p>
+                <Drawer
+                    title="Inloggen"
+                    buttons={
+                        <Button variant="primary" buttonText={"Inloggen"}/>
+                    }
+                    footertext={
+                        <p>
+                            Nog geen account? <Link to="/signup">Account aanmaken</Link>
+                        </p>
+                    }
+                >
                     <Input
                         variant={"dark"}
-                        label={"Inlogcode"}
+                        label={"E-mailadres"}
                         placeholderText={"Type something"}
                     />
-                    buttons={<Button type="primary">Login</Button>}
+                    <Input
+                        variant={"dark"}
+                        label={"Wachtwoord"}
+                        placeholderText={"Type something"}
+                    />
                 </Drawer>
             </div>
         </>
