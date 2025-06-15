@@ -1,6 +1,6 @@
 import "./Input.css";
 
-function Input({ variant, label, placeholderText }) {
+function Input({ variant, label, type, value, name, placeholderText, onChange }) {
     let colorScheme;
     switch (variant) {
         case "dark": colorScheme = "dark"; break;
@@ -13,9 +13,11 @@ function Input({ variant, label, placeholderText }) {
             {label}
             <input
                 className={`default-body-text ${colorScheme}`}
-                type="text"
-                name={label}
+                type={type}
+                value={value}
+                name={name}
                 placeholder={placeholderText}
+                onChange={onChange}
             ></input>
         </label>
     )

@@ -17,6 +17,12 @@
     object-fit: cover;
 }
 
+#login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
 @media screen and (max-width: 768px) {
     .login-page {
         flex-direction: column;

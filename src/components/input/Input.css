@@ -26,3 +26,7 @@ input.light {
 input.dark {
     color: var(--Text-light);
 }
+
+input::placeholder {
+    color: var(--Grey-light);
+}

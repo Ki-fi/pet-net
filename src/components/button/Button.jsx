@@ -1,13 +1,14 @@
 import './Button.css';
 import Icon from "../icon/Icon.jsx";
 
-function Button({ iconName, variant, isDisabled, hasIconLeft, hasIconRight, onClick, buttonText}) {
+function Button({ type, iconName, variant, isDisabled, hasIconLeft, hasIconRight, onClick, buttonText, form}) {
     return (
         <button
-            type="button"
+            type={type}
             className={variant}
             disabled={isDisabled}
             onClick={onClick}
+            form={form}
         >
             {hasIconLeft && Icon({iconName})}
             {buttonText}
