@@ -6,6 +6,7 @@ import './Login.css';
 import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import axios from "axios";
+import Snackbar from "../../components/snackbar/Snackbar.jsx";
 
 function Login() {
 
@@ -14,6 +15,8 @@ function Login() {
         password: "",
     })
 
+    const [error, setError] = useState(false);
+    const [loading, toggleLoading] = useState(false);
     const navigate = useNavigate();
 
     function handleChange(e) {
@@ -27,12 +30,18 @@ function Login() {
     }
 
     async function login() {
+        setError(false);
+        toggleLoading(true);
+
         try { const response = await axios.post("/login", formState)
             if (response.status === 200) {
                 navigate("/buurtgroep");
             }
         } catch (error) {
-            console.log("Inloggen niet gelukt, probeer opnieuw", error);
+            setError(true)
+            console.log(error);
+        } finally {
+            toggleLoading(false);
         }
     }
 
@@ -49,6 +58,7 @@ function Login() {
                             type="submit"
                             variant="primary"
                             buttonText={"Inloggen"}
+                            isDisabled={loading === true}
                             form="login-form"
                         />
                     }
@@ -59,23 +69,27 @@ function Login() {
                     }
                 >
                     <form id="login-form" onSubmit={handleSubmit}>
-                    <Input
-                        variant={"dark"}
-                        label={"E-mailadres"}
-                        value={formState.email}
-                        name="email"
-                        placeholderText={"Vul je e-mailadres in"}
-                        onChange={handleChange}
-                    />
-                    <Input
-                        variant={"dark"}
-                        type="password"
-                        label={"Wachtwoord"}
-                        value={formState.password}
-                        name="password"
-                        placeholderText={"Geef je wachtwoord op"}
-                        onChange={handleChange}
-                    />
+                        <Input
+                            variant={"dark"}
+                            label={"E-mailadres"}
+                            value={formState.email}
+                            name="email"
+                            placeholderText={"Vul je e-mailadres in"}
+                            onChange={handleChange}
+                        />
+                        <Input
+                            variant={"dark"}
+                            type="password"
+                            label={"Wachtwoord"}
+                            value={formState.password}
+                            name="password"
+                            placeholderText={"Geef je wachtwoord op"}
+                            onChange={handleChange}
+                        />
+                        {error && <Snackbar
+                            variant={"error"}
+                            message={"Inloggen niet gelukt, probeer het eens opnieuw"}/>}
+
                     </form>
                 </Drawer>
             </div>
