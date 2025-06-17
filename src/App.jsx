@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 import Buurtgroep from "./pages/buurtgroep/Buurtgroep.jsx";
 import Login from "./pages/login/Login.jsx";
 import Signup from "./pages/signup/Signup.jsx";
-import Input from "./components/input/Input.jsx";
 
 function App() {
 

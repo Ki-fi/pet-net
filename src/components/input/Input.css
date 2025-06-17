@@ -6,6 +6,8 @@ label {
 }
 
 input {
+    display: flex;
+    flex-grow: 1;
     width: 100%;
     padding: 8px 12px;
     border-radius: 4px;
@@ -18,15 +20,15 @@ input:focus {
     outline: none;
 }
 
-input.light {
+.light {
     color: var(--Text-dark);
 }
 
-input.dark {
+.dark {
     color: var(--Text-light);
 }
 
-input.error {
+.error {
     border-color: var(--Brown-light);
 }
 
