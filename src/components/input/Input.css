@@ -6,7 +6,6 @@ label {
 }
 
 input {
-    height: 42px;
     width: 100%;
     padding: 8px 12px;
     border-radius: 4px;
@@ -25,6 +24,14 @@ input.light {
 
 input.dark {
     color: var(--Text-light);
+}
+
+input.error {
+    border-color: var(--Brown-light);
+}
+
+.input-error-text {
+    color: var(--Brown-light);
 }
 
 input::placeholder {

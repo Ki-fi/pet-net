@@ -7,6 +7,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import axios from "axios";
 import Snackbar from "../../components/snackbar/Snackbar.jsx";
+import validateCredentials from "../../helpers/validateCredentials.js";
 
 function Login() {
 
@@ -16,6 +17,7 @@ function Login() {
     })
 
     const [error, setError] = useState(false);
+    const [validation, setValidation] = useState(false);
     const [loading, toggleLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -25,18 +27,24 @@ function Login() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        login(formState)
+        setError(false);
+
+        const validationResult = validateCredentials(formState);
+        setValidation(validationResult);
+
+        if (!validationResult.hasErrors) {
+            login(formState);
+        }
+
         console.log(formState.email, formState.password);
     }
 
     async function login() {
-        setError(false);
         toggleLoading(true);
 
         try { const response = await axios.post("/login", formState)
             if (response.status === 200) {
-                navigate("/buurtgroep");
-            }
+                navigate("/buurtgroep");}
         } catch (error) {
             setError(true)
             console.log(error);
@@ -70,32 +78,34 @@ function Login() {
                 >
                     <form id="login-form" onSubmit={handleSubmit}>
                         <Input
-                            variant={"dark"}
+                            theme={"dark"}
                             label={"E-mailadres"}
                             value={formState.email}
                             name="email"
                             placeholderText={"Vul je e-mailadres in"}
                             onChange={handleChange}
+                            hasError={validation.email}
+                            errorMessage={"Dit is geen geldig e-mail adres"}
                         />
                         <Input
-                            variant={"dark"}
+                            theme={"dark"}
                             type="password"
                             label={"Wachtwoord"}
                             value={formState.password}
                             name="password"
                             placeholderText={"Geef je wachtwoord op"}
                             onChange={handleChange}
+                            hasError={validation.password}
+                            errorMessage={"Incorrect wachtwoord"}
                         />
                         {error && <Snackbar
                             variant={"error"}
                             message={"Inloggen niet gelukt, probeer het eens opnieuw"}/>}
-
                     </form>
                 </Drawer>
             </div>
         </>
     )
-
 }
 
 export default Login;

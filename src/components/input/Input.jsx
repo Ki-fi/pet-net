@@ -1,18 +1,27 @@
 import "./Input.css";
 
-function Input({ variant, label, type, value, name, placeholderText, onChange }) {
-    let colorScheme;
-    switch (variant) {
-        case "dark": colorScheme = "dark"; break;
-        case "light": colorScheme = "light"; break;
-        default: colorScheme = "light"; break;
-    }
+function Input({
+    theme = "light",
+    hasError = false,
+    errorMessage = "",
+    label,
+    type,
+    value,
+    name,
+    placeholderText,
+    onChange
+               })
+    {
+
+    const labelClass = `subtitle ${theme}`;
+    const inputClass = `default-body-text ${theme} ${hasError ? "error" : ""}`;
 
     return (
-        <label className={`subtitle ${colorScheme}`}>
+        <div>
+        <label className={`subtitle ${labelClass}`}>
             {label}
             <input
-                className={`default-body-text ${colorScheme}`}
+                className={`default-body-text ${inputClass}`}
                 type={type}
                 value={value}
                 name={name}
@@ -20,6 +29,8 @@ function Input({ variant, label, type, value, name, placeholderText, onChange })
                 onChange={onChange}
             ></input>
         </label>
+            {hasError && <p className={"input-error-text"}>{errorMessage}</p>}
+        </div>
     )
 }
 

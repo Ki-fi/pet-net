@@ -1,21 +1,14 @@
 import './Snackbar.css';
 
-function Snackbar({ variant, message }) {
-    let color;
-    switch (variant) {
-        case "default":
-            color = "default";
-            break;
-        case "error":
-            color = "error";
-            break;
-        default:
-            color = "default";
-            break;
-    }
+function Snackbar({
+    variant = "default",
+    message
+})
+
+{
 
     return (
-        <div className={`snackbar ${color}`}>
+        <div className={`snackbar ${variant}`}>
             <p>{message}</p>
         </div>
     )
