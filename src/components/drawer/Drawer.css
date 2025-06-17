@@ -6,24 +6,32 @@
     background: var(--Grey);
     box-shadow: -8px 0 0 0 var(--Text-dark);
     color: var(--Text-light);
-    gap: 16px;
     width: 500px;
     height: 100vh;
     padding: 24px;
 }
 
-.drawer .content {
+.drawer-content {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    gap: 12px;
+    flex-grow: 1;
+}
+
+.drawer-content .subheading {
+    padding-bottom: 16px;
+}
+
+.drawer-footer {
+    display: flex;
+    flex-direction: column;
+    color: var(--Text-light);
     gap: 16px;
 }
 
-.drawer .buttons {
-    display: flex;
-    padding: 24px;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 8px;
+.drawer-footer a {
+    color: var(--Text-light);
 }
 
 @media screen and (max-width: 768px) {
@@ -31,6 +39,7 @@
         width: 100vw;
         height: 50%;
         padding: 24px;
+        flex-grow: 1;
         box-shadow: 0 -8px 0 0 var(--Text-dark);
     }
 }

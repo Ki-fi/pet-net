@@ -1,18 +1,19 @@
 import './Drawer.css';
-import Button from "../button/Button.jsx";
 
-
-function Drawer({ title, children, buttons}) {
+function Drawer({ title, children, buttons, footertext }) {
     return (
-        <div className="drawer">
-            <div className="content">
-            <h2 className="subheading">{title}</h2>
-            {children}
+        <>
+            <div className="drawer">
+                <div className="drawer-content">
+                    <h2 className="subheading">{title}</h2>
+                    {children}
+                </div>
+                <div className="drawer-footer">
+                    {footertext}
+                    {buttons}
+                </div>
             </div>
-            <div className="buttons">
-                {buttons}
-            </div>
-        </div>
+        </>
     )
 }
 
