@@ -5,6 +5,8 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Input from "../../components/input/Input.jsx";
 import Snackbar from "../../components/snackbar/Snackbar.jsx";
+import validateCredentials from "../../helpers/validateCredentials.js";
+import axios from "axios";
 
 function Signup() {
 
@@ -19,15 +21,42 @@ function Signup() {
     const [error, setError] = useState(false);
     const [validation, setValidation] = useState(false);
     const [loading, toggleLoading] = useState(false);
+    const [newUserId, setNewUserId] = useState("");
     const navigate = useNavigate();
 
     function handleChange(e) {
         setFormState({ ...formState, [e.target.name]: e.target.value });
     }
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         setError(false);
+
+        const validationResult = validateCredentials(formState);
+        setValidation(validationResult);
+
+        if (!validationResult.hasErrors) {
+
+            try {
+                const response = await axios.post(
+                    "http://localhost:8080/signup",
+                    {
+                        "email": formState.email,
+                        "password": formState.password,
+                        "firstName": formState.firstname,
+                        "preposition": formState.preposition,
+                        "lastName": formState.lastname
+                    },
+                    {headers: {
+                            "Content-Type": "application/json"
+                        }});
+                console.log(response.data);
+            } catch {
+                setError(true);
+            } finally {
+                toggleLoading(false);
+            }
+        }
     }
 
     function backButton() {
@@ -77,14 +106,46 @@ function Signup() {
                         label={"Wachtwoord"}
                         value={formState.password}
                         name="password"
-                        placeholderText={"Vul een veilig wachtwoord in"}
+                        placeholderText={"Geef een veilig wachtwoord op"}
                         onChange={handleChange}
                         hasError={validation.password}
                         errorMessage={"Incorrect wachtwoord"}
                     />
+                    <p>Aan welke naam kunnen groepsgenoten jou herkennen?</p>
+                    <Input
+                        theme={"light"}
+                        type="firstname"
+                        label={"Voornaam"}
+                        value={formState.firstname}
+                        name="firstname"
+                        placeholderText={"Vul je voornaam in"}
+                        onChange={handleChange}
+                        hasError={validation.firstname}
+                        errorMessage={"Vul je voornaam in"}
+                    />
+                    <Input
+                        theme={"light"}
+                        type="preposition"
+                        label={"Tussenvoegsel (optioneel)"}
+                        value={formState.preposition}
+                        name="preposition"
+                        placeholderText={"Vul een tussenvoegsel in"}
+                        onChange={handleChange}
+                    />
+                    <Input
+                        theme={"light"}
+                        type="lastname"
+                        label={"Achternaam"}
+                        value={formState.lastname}
+                        name="lastname"
+                        placeholderText={"Vul je achternaam in"}
+                        onChange={handleChange}
+                        hasError={validation.lastname}
+                        errorMessage={"Vul je achternaam in"}
+                    />
                     {error && <Snackbar
                         variant={"error"}
-                        message={"Iets is er misgegaan, probeer het nog eens"}/>}
+                        message={"Account aanmaken niet gelukt, probeer nog een keer"}/>}
                 </form>
             </Card>
             </section>

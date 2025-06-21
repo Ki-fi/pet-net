@@ -42,7 +42,7 @@ function Login() {
     async function login() {
         toggleLoading(true);
 
-        try { const response = await axios.post("/login", formState)
+        try { const response = await axios.post("http://localhost:8080/login", formState)
             if (response.status === 200) {
                 navigate("/buurtgroep");}
         } catch (error) {
@@ -100,7 +100,7 @@ function Login() {
                         />
                         {error && <Snackbar
                             variant={"error"}
-                            message={"Inloggen niet gelukt, probeer het eens opnieuw"}/>}
+                            message={"Inloggen niet gelukt, probeer nog een keer"}/>}
                     </form>
                 </Drawer>
             </div>
