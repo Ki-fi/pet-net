@@ -5,8 +5,8 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Input from "../../components/input/Input.jsx";
 import Snackbar from "../../components/snackbar/Snackbar.jsx";
-import validateCredentials from "../../helpers/validateCredentials.js";
 import axios from "axios";
+import validateCredentialsOnSignup from "../../helpers/validateCredentialsOnSignup.js";
 
 function Signup() {
 
@@ -18,7 +18,7 @@ function Signup() {
         lastname: ""
     })
 
-    const [error, setError] = useState(false);
+    const [error, setError] = useState("");
     const [validation, setValidation] = useState(false);
     const [loading, toggleLoading] = useState(false);
     const [newUserId, setNewUserId] = useState("");
@@ -30,9 +30,9 @@ function Signup() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        setError(false);
+        setError("");
 
-        const validationResult = validateCredentials(formState);
+        const validationResult = validateCredentialsOnSignup(formState);
         setValidation(validationResult);
 
         if (!validationResult.hasErrors) {
@@ -51,8 +51,17 @@ function Signup() {
                             "Content-Type": "application/json"
                         }});
                 console.log(response.data);
-            } catch {
-                setError(true);
+                navigate("/signup/welcome", {
+                    state: {
+                        firstName: formState.firstname
+                    }
+                });
+            } catch(e) {
+                if (e.response) {
+                    setError(e.response.data.error);
+                } else {
+                    setError("Account aanmaken niet gelukt, probeer nog een keer");
+                }
             } finally {
                 toggleLoading(false);
             }
@@ -62,7 +71,6 @@ function Signup() {
     function backButton() {
         navigate("/login")
     }
-
 
     return (
         <>
@@ -145,7 +153,7 @@ function Signup() {
                     />
                     {error && <Snackbar
                         variant={"error"}
-                        message={"Account aanmaken niet gelukt, probeer nog een keer"}/>}
+                        message={error}/>}
                 </form>
             </Card>
             </section>

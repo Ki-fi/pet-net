@@ -7,7 +7,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import axios from "axios";
 import Snackbar from "../../components/snackbar/Snackbar.jsx";
-import validateCredentials from "../../helpers/validateCredentials.js";
+import validateCredentialsOnLogin from "../../helpers/validateCredentialsOnLogin.js";
 
 function Login() {
 
@@ -29,7 +29,7 @@ function Login() {
         e.preventDefault();
         setError(false);
 
-        const validationResult = validateCredentials(formState);
+        const validationResult = validateCredentialsOnLogin(formState);
         setValidation(validationResult);
 
         if (!validationResult.hasErrors) {
