@@ -1,0 +1,15 @@
+
+.signup-section {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    min-height: 100vh;
+    padding: 24px;
+}
+
+#signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 32px;
+}

@@ -18,10 +18,10 @@ function Input({
 
     return (
         <div>
-        <label className={`subtitle ${labelClass}`}>
+        <label className={labelClass}>
             {label}
             <input
-                className={`default-body-text ${inputClass}`}
+                className={inputClass}
                 type={type}
                 value={value}
                 name={name}

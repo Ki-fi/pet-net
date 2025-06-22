@@ -7,7 +7,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import axios from "axios";
 import Snackbar from "../../components/snackbar/Snackbar.jsx";
-import validateCredentials from "../../helpers/validateCredentials.js";
+import validateCredentialsOnLogin from "../../helpers/validateCredentialsOnLogin.js";
 
 function Login() {
 
@@ -29,7 +29,7 @@ function Login() {
         e.preventDefault();
         setError(false);
 
-        const validationResult = validateCredentials(formState);
+        const validationResult = validateCredentialsOnLogin(formState);
         setValidation(validationResult);
 
         if (!validationResult.hasErrors) {
@@ -42,7 +42,7 @@ function Login() {
     async function login() {
         toggleLoading(true);
 
-        try { const response = await axios.post("/login", formState)
+        try { const response = await axios.post("http://localhost:8080/login", formState)
             if (response.status === 200) {
                 navigate("/buurtgroep");}
         } catch (error) {
@@ -100,7 +100,7 @@ function Login() {
                         />
                         {error && <Snackbar
                             variant={"error"}
-                            message={"Inloggen niet gelukt, probeer het eens opnieuw"}/>}
+                            message={"Inloggen niet gelukt, probeer nog een keer"}/>}
                     </form>
                 </Drawer>
             </div>

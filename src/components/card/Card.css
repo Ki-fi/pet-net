@@ -2,9 +2,13 @@
 .card {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     align-content: stretch;
-    padding: 16px;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    flex-grow: 1;
+    padding: 24px;
     border-radius: 4px;
     background: #FFF;
     box-shadow: 0 4px 0 0 #3A393B;
@@ -13,5 +17,19 @@
 .card-header {
     display: flex;
     align-items: center;
+    gap: 8px;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-grow: 1;
+    max-width: 400px;
+    margin: 16px 0;
+}
+
+.card-footer {
+    display: flex;
     gap: 8px;
 }
