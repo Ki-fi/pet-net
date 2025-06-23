@@ -1,0 +1,20 @@
+
+.notfound-snippet {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    max-width: 400px;
+    padding-bottom: 82px;
+}
+
+.notfound-wrapper {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
+
+.notfound-wrapper img {
+    max-width: 250px;
+}

@@ -4,6 +4,7 @@ import Buurtgroep from "./pages/buurtgroep/Buurtgroep.jsx";
 import Login from "./pages/login/Login.jsx";
 import Signup from "./pages/signup/Signup.jsx";
 import SignupSuccess from "./pages/successful signup/SignupSuccess.jsx";
+import NotFound from "./pages/404/NotFound.jsx";
 
 function App() {
 
@@ -17,7 +18,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/buurtgroep" element={<Buurtgroep />} />
               <Route path="/profiel" element={<div>Profile page</div>} />
-              <Route path="*" element={<div>Not Found</div>} />
+              <Route path="*" element={<NotFound />} />
           </Routes>
           </div>
       </>
