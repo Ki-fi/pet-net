@@ -1,0 +1,35 @@
+
+textarea {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 2px solid var(--Text-dark);
+    background-color:transparent;
+}
+
+textarea:focus {
+    border-color: #A5B62B;
+    outline: none;
+}
+
+.light {
+    color: var(--Text-dark);
+}
+
+.dark {
+    color: var(--Text-light);
+}
+
+.error {
+    border-color: var(--Brown-light);
+}
+
+.textarea-error-text {
+    color: var(--Brown-light);
+}
+
+textarea::placeholder {
+    color: var(--Grey-light);
+}

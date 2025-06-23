@@ -6,9 +6,12 @@ import Avatar from "../../components/avatar/Avatar.jsx";
 import Button from "../../components/button/Button.jsx";
 import Chip from "../../components/chip/Chip.jsx";
 import './Buurtgroep.css';
+import {useNavigate} from "react-router-dom";
 
 
 function Buurtgroep() {
+
+    const navigate = useNavigate();
 
     return (
         <>
@@ -26,7 +29,6 @@ function Buurtgroep() {
                         title={"Adison George"}
                         hasSubtitle={true}
                         subtitle={"Dit is een ondertitel"}
-                        contentClass={"buurtgroep-content"}
                         buttons={<Button
                             variant={"primary"}
                             buttonText="reageren"
@@ -40,7 +42,6 @@ function Buurtgroep() {
                         title={"Chap Workman"}
                         hasSubtitle={true}
                         subtitle={"Dit is een ondertitel"}
-                        contentClass={"buurtgroep-content"}
                         buttons={<Button
                             variant={"primary"}
                             buttonText="reageren"
@@ -54,6 +55,7 @@ function Buurtgroep() {
                         variant="fab"
                         hasIconLeft={true}
                         iconName={"add"}
+                        onClick={() => {navigate("/buurtgroep/new")}}
                     />
                 </div>
             </div>

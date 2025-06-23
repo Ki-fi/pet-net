@@ -6,8 +6,8 @@
     align-items: center;
     justify-content: space-between;
     background: var(--Grey);
-    box-shadow: 0 8px 0 0 #464646;
     color: var(--Text-light);
+    border-bottom: 8px solid #464642;
     width: 100%;
 }
 

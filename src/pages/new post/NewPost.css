@@ -1,0 +1,9 @@
+
+.new-post-card {
+    flex-grow: 1;
+    align-items: stretch;
+    gap: 12px;
+    padding-bottom: 24px;
+}
+
+

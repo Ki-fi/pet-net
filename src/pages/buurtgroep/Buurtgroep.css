@@ -20,10 +20,6 @@
     height: 100vh;
 }
 
-.buurtgroep-content {
-
-}
-
 .cards-wrapper {
     display: flex;
     flex-direction: column;
@@ -36,16 +32,21 @@
     padding: 24px;
     gap: 16px;
     overflow: auto;
+    scrollbar-width: none;
+}
+
+.cards-wrapper::-webkit-scrollbar {
+    display: none;
 }
 
 .footer {
-    z-index: 10;
+    position: relative;
     display: flex;
     justify-content: flex-end;
     max-width: 800px;
     width: 100%;
-    margin-bottom: 16px
 }
+
 
 
 @media screen and (max-width: 768px) {

@@ -54,6 +54,9 @@ button:disabled {
 }
 
 .fab {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
     z-index: 10;
     border-radius: 56px;
     background: var(--Blue-light);
