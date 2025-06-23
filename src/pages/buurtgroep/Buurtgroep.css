@@ -20,6 +20,10 @@
     height: 100vh;
 }
 
+.buurtgroep-content {
+
+}
+
 .cards-wrapper {
     display: flex;
     flex-direction: column;
@@ -35,6 +39,7 @@
 }
 
 .footer {
+    z-index: 10;
     display: flex;
     justify-content: flex-end;
     max-width: 800px;

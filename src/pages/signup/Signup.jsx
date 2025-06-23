@@ -77,6 +77,7 @@ function Signup() {
             <section className="signup-section">
             <Card
                 title="Nieuw account"
+                contentClass="signup-form"
                 buttons={
                 <>
                     <Button
