@@ -1,18 +1,15 @@
 import './NewPost.css';
 import SideMenu from "../../components/side-menu/SideMenu.jsx";
 import PageBar from "../../components/page-bar/PageBar.jsx";
-import ToggleButton from "../../components/toggle-button/ToggleButton.jsx";
 import Card from "../../components/card/Card.jsx";
-import Avatar from "../../components/avatar/Avatar.jsx";
 import Button from "../../components/button/Button.jsx";
-import Chip from "../../components/chip/Chip.jsx";
 import Input from "../../components/input/Input.jsx";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import { useEffect, useRef } from "react";
 import Textarea from "../../components/textarea/Textarea.jsx";
 
 function NewPost() {
-
 
     const [formState, setFormState] = useState({
         request: "",
@@ -25,11 +22,25 @@ function NewPost() {
     const [validation, setValidation] = useState(false);
     const [loading, toggleLoading] = useState(false);
     const navigate = useNavigate();
+    const [step, setStep] = useState(1);
+
+    const cardRefs = {
+        1: useRef(null),
+        2: useRef(null),
+        3: useRef(null),
+        4: useRef(null)
+    };
+
+    useEffect(() => {
+        const ref = cardRefs[step];
+        if (ref && ref.current) {
+            ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, [step]);
 
     function handleChange(e) {
         setFormState({ ...formState, [e.target.name]: e.target.value });
     }
-
 
     return (
         <>
@@ -38,32 +49,39 @@ function NewPost() {
                 <div className="content">
                     <PageBar pageTitle={"Nieuwe post"}/>
                     <form className="cards-wrapper" id="new-post-form">
-                        <Card
-                            title={"Gevraagd"}
-                            contentClass={"new-post-card"}
-                            hasSubtitle={true}
-                            subtitle={"Waar ben je naar op zoek?"}
-                        >
-                            <Input
-                                hasError={validation.request}
-                                errorMessage="Vul je verzoek in"
-                                value={formState.request}
-                                name="request"
-                                onChange={handleChange}
-                                placeholderText="Bijv: Oppas voor mijn kat"
-                            />
-                        </Card>
-                        <Card
-                            title={"Datum"}
-                            contentClass={"new-post-card"}
-                            hasSubtitle={true}
-                            subtitle={"Wanneer heb je het nodig?"}
-                            buttons={<Button
+                        {step >= 1 &&
+                            <div ref={cardRefs[1]}>
+                            <Card
+                                title={"Gevraagd"}
+                                contentClass={"new-post-card"}
+                                hasSubtitle={true}
+                                subtitle={"Waar ben je naar op zoek?"}
+                            >
+                                <Input
+                                    hasError={validation.request}
+                                    errorMessage="Vul je verzoek in"
+                                    value={formState.request}
+                                    name="request"
+                                    onChange={handleChange}
+                                    placeholderText="Bijv: Oppas voor mijn kat"
+                                />
+                            </Card>
+                            </div>
+                        }
+                        {step >= 1 &&
+                            <div ref={cardRefs[1]}>
+                            <Card
+                                title={"Datum"}
+                                contentClass={"new-post-card"}
+                                hasSubtitle={true}
+                                subtitle={"Wanneer heb je het nodig?"}
+                                buttons={<Button
                                 variant={"secondary"}
                                 buttonText="Volgende"
-                                onClick={() => {}}
+                                type="button"
+                                onClick={() => {setStep(2)}}
                             />}
-                        >
+                            >
                             <Input
                                 hasError={validation.startDate}
                                 errorMessage="Vul een startdatum in"
@@ -82,59 +100,76 @@ function NewPost() {
                                 onChange={handleChange}
                                 placeholderText="Vul een eind datum in"
                             />
-                        </Card>
-                        <Card
-                            title={"Services"}
-                            contentClass={"new-post-card"}
-                            hasSubtitle={true}
-                            subtitle={"Welke taken moeten er worden uitgevoerd?"}
-                            buttons={
-                            <>
-                                <Button
-                                    variant={"primary"}
-                                    buttonText="Service toevoegen"
-                                    onClick={() => {}}
-                                />
-                                <Button
+                            </Card>
+                            </div>
+                        }
+                        {step >= 2 &&
+                            <div ref={cardRefs[2]}>
+                            <Card
+                                title={"Services"}
+                                contentClass={"new-post-card"}
+                                hasSubtitle={true}
+                                subtitle={"Welke taken moeten er worden uitgevoerd?"}
+                                buttons={
+                                    <>
+                                        <Button
+                                            variant={"primary"}
+                                            buttonText="Service toevoegen"
+                                            type="button"
+                                            onClick={() => {}}
+                                        />
+                                        <Button
+                                            variant={"secondary"}
+                                            buttonText="Volgende"
+                                            type="button"
+                                            onClick={() => {setStep(3)}}
+                                        />
+                                    </>}
+                            >
+                            </Card>
+                            </div>
+                        }
+                        {step >= 3 &&
+                            <div ref={cardRefs[3]}>
+                            <Card
+                                title={"Bijzonderheden"}
+                                contentClass={"new-post-card"}
+                                hasSubtitle={true}
+                                subtitle={"Is er nog iets dat de ander moet weten?"}
+                                buttons={<Button
                                     variant={"secondary"}
                                     buttonText="Volgende"
+                                    type="button"
+                                    onClick={() => {setStep(4)}}
+                                />}
+                            >
+                                <Textarea
+                                    value={formState.remarks}
+                                    name="remarks"
+                                    placeholderText="Vul bijzonderheden in"
+                                    onChange={handleChange}
+                                ></Textarea>
+                            </Card>
+                            </div>
+                        }
+                        {step >= 4 &&
+                            <div ref={cardRefs[4]}>
+                            <Card
+                                title={"Samenvatting"}
+                                contentClass={"new-post-card"}
+                                hasSubtitle={true}
+                                subtitle={"Kloppen alle details?"}
+                                buttons={<Button
+                                    variant={"primary"}
+                                    type={"submit"}
+                                    form={"new-post-form"}
+                                    buttonText="Post plaatsen"
                                     onClick={() => {}}
-                            />
-                            </>}
-                        >
-                        </Card>
-                        <Card
-                            title={"Bijzonderheden"}
-                            contentClass={"new-post-card"}
-                            hasSubtitle={true}
-                            subtitle={"Is er nog iets dat de ander moet weten?"}
-                            buttons={<Button
-                                variant={"secondary"}
-                                buttonText="Volgende"
-                                onClick={() => {}}
-                            />}
-                        >
-                            <Textarea
-                                value={formState.remarks}
-                                name="remarks"
-                                placeholderText="Vul bijzonderheden in"
-                                onChange={handleChange}
-                            ></Textarea>
-                        </Card>
-                        <Card
-                            title={"Samenvatting"}
-                            contentClass={"new-post-card"}
-                            hasSubtitle={true}
-                            subtitle={"Kloppen alle details?"}
-                            buttons={<Button
-                                variant={"primary"}
-                                type={"submit"}
-                                form={"new-post-form"}
-                                buttonText="Post plaatsen"
-                                onClick={() => {}}
-                            />}
-                        >
-                        </Card>
+                                />}
+                            >
+                            </Card>
+                            </div>
+                        }
                     </form>
                     <div className="footer">
 
