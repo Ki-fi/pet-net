@@ -8,8 +8,8 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import { useEffect, useRef } from "react";
 import Textarea from "../../components/textarea/Textarea.jsx";
-import validateCredentialsOnLogin from "../../helpers/validateCredentialsOnLogin.js";
 import validateNewPostInput from "../../helpers/validateNewPostInput.js";
+import CardContent from "../../components/card-content/CardContent.jsx";
 
 function NewPost() {
 
@@ -96,6 +96,7 @@ function NewPost() {
                             />}
                             >
                             <Input
+                                type="date"
                                 hasError={validation.startDate}
                                 errorMessage="Vul een geldige startdatum in"
                                 label="Van:"
@@ -105,6 +106,7 @@ function NewPost() {
                                 placeholderText="Vul een start datum in"
                             />
                             <Input
+                                type="date"
                                 hasError={validation.endDate}
                                 errorMessage="Vul een geldige einddatum in"
                                 label="Tot:"
@@ -180,6 +182,13 @@ function NewPost() {
                                     onClick={() => {}}
                                 />}
                             >
+                                <CardContent
+                                    request={formState.request}
+                                    startDate={formState.startDate}
+                                    endDate={formState.endDate}
+                                    service={formState.service}
+                                    remarks={formState.remarks}
+                                />
                             </Card>
                             </div>
                         }
