@@ -8,6 +8,8 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import { useEffect, useRef } from "react";
 import Textarea from "../../components/textarea/Textarea.jsx";
+import validateCredentialsOnLogin from "../../helpers/validateCredentialsOnLogin.js";
+import validateNewPostInput from "../../helpers/validateNewPostInput.js";
 
 function NewPost() {
 
@@ -23,7 +25,6 @@ function NewPost() {
     const [loading, toggleLoading] = useState(false);
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
-
     const cardRefs = {
         1: useRef(null),
         2: useRef(null),
@@ -42,13 +43,19 @@ function NewPost() {
         setFormState({ ...formState, [e.target.name]: e.target.value });
     }
 
+    function handleSubmit(e) {
+        e.preventDefault();
+        setError(false);
+
+    }
+
     return (
         <>
             <div className="buurtgroep-page">
                 <div className="menu-wrapper"><SideMenu /></div>
                 <div className="content">
                     <PageBar pageTitle={"Nieuwe post"}/>
-                    <form className="cards-wrapper" id="new-post-form">
+                    <form className="cards-wrapper" id="new-post-form" onSubmit={handleSubmit}>
                         {step >= 1 &&
                             <div ref={cardRefs[1]}>
                             <Card
@@ -79,12 +86,18 @@ function NewPost() {
                                 variant={"secondary"}
                                 buttonText="Volgende"
                                 type="button"
-                                onClick={() => {setStep(2)}}
+                                onClick={() => {
+                                    const validationResult = validateNewPostInput(formState);
+                                    setValidation(validationResult);
+                                    if (!validationResult.hasErrors) {
+                                        console.log("form is valid!")
+                                        setStep(2)}}
+                                    }
                             />}
                             >
                             <Input
                                 hasError={validation.startDate}
-                                errorMessage="Vul een startdatum in"
+                                errorMessage="Vul een geldige startdatum in"
                                 label="Van:"
                                 value={formState.startDate}
                                 name="startDate"
@@ -93,7 +106,7 @@ function NewPost() {
                             />
                             <Input
                                 hasError={validation.endDate}
-                                errorMessage="Vul een einddatum in"
+                                errorMessage="Vul een geldige einddatum in"
                                 label="Tot:"
                                 value={formState.endDate}
                                 name="endDate"
