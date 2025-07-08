@@ -10,6 +10,8 @@ import { useEffect, useRef } from "react";
 import Textarea from "../../components/textarea/Textarea.jsx";
 import validateNewPostInput from "../../helpers/validateNewPostInput.js";
 import CardContent from "../../components/card-content/CardContent.jsx";
+import axios from "axios";
+import Snackbar from "../../components/snackbar/Snackbar.jsx";
 
 function NewPost() {
 
@@ -25,11 +27,13 @@ function NewPost() {
     const [loading, toggleLoading] = useState(false);
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
+    const [showSnackbar, setShowSnackbar] = useState(false);
     const cardRefs = {
         1: useRef(null),
         2: useRef(null),
         3: useRef(null),
-        4: useRef(null)
+        4: useRef(null),
+        5: useRef(null),
     };
 
     useEffect(() => {
@@ -46,7 +50,35 @@ function NewPost() {
     function handleSubmit(e) {
         e.preventDefault();
         setError(false);
+        setShowSnackbar(false);
 
+        const validationResult = validateNewPostInput(formState);
+        setValidation(validationResult);
+
+        if (!validationResult.hasErrors) {
+            savePost(formState);
+        }
+    }
+
+    async function savePost() {
+        try { const response = await axios.post("http://localhost:8080/posts", {
+            "startDate": formState.startDate,
+            "endDate": formState.endDate,
+            "title": formState.request,
+            "remark": formState.remarks,
+            "userId": 1
+        });
+            if (response.status === 201) {
+                setStep(5);
+                setShowSnackbar(true);
+            }
+        } catch (error) {
+            setStep(5);
+            setError(true);
+            console.log(error);
+        } finally {
+            toggleLoading(false);
+        }
     }
 
     return (
@@ -54,7 +86,7 @@ function NewPost() {
             <div className="buurtgroep-page">
                 <div className="menu-wrapper"><SideMenu /></div>
                 <div className="content">
-                    <PageBar pageTitle={"Nieuwe post"}/>
+                    <PageBar pageTitle={"Nieuwe post"} iconName={"arrow_back"}/>
                     <form className="cards-wrapper" id="new-post-form" onSubmit={handleSubmit}>
                         {step >= 1 &&
                             <div ref={cardRefs[1]}>
@@ -192,10 +224,20 @@ function NewPost() {
                             </Card>
                             </div>
                         }
-                    </form>
-                    <div className="footer">
+                    {showSnackbar && step >= 5 &&
+                        <div ref={cardRefs[5]}>
+                            <Snackbar
+                        variant={"default"}
+                        message={"Post geplaatst!"}/>
+                        </div>}
 
-                    </div>
+                    {error && step >= 5 &&
+                        <div ref={cardRefs[5]}>
+                        <Snackbar
+                        variant={"error"}
+                        message={"Er is iets misgegaan, probeer nog een keer"}/>
+                        </div>}
+                    </form>
                 </div>
             </div>
         </>
