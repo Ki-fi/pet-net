@@ -15,6 +15,8 @@ function SideMenu() {
     };
 
     return (
+        <>
+{/*For desktop view*/}
         <nav className="side-menu">
             <img src={logo} alt="logo" />
             <ul>
@@ -34,6 +36,24 @@ function SideMenu() {
                 </li>
             </ul>
         </nav>
+{/*For mobile view*/}
+        <nav className="bottom-menu">
+            <ul>
+                <li
+                    className={`menu-item ${selected === 'buurtgroep' ? 'active' : ''}`}
+                    onClick={() => handleItem('buurtgroep', '/buurtgroep')}
+                >
+                    <Icon iconName={"view_list"} />
+                </li>
+                <li
+                    className={`menu-item ${selected === 'profiel' ? 'active' : ''}`}
+                    onClick={() => handleItem('profiel', '/profiel')}
+                >
+                    <Icon iconName={"account_circle"} />
+                </li>
+            </ul>
+        </nav>
+        </>
     )
 }
 
