@@ -7,11 +7,38 @@ import Button from "../../components/button/Button.jsx";
 import Chip from "../../components/chip/Chip.jsx";
 import './Buurtgroep.css';
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import {useEffect, useState} from "react";
+import CardContent from "../../components/card-content/CardContent.jsx";
 
 
 function Buurtgroep() {
 
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+
+        async function fetchPosts() {
+            setLoading(true);
+            setError(false);
+            try { const response = await axios.get('http://localhost:8080/posts');
+                const results = response.data;
+                setPosts(results);
+            } catch (error) {
+                console.error(error);
+                setError(true);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchPosts();
+
+    },[]);
+
 
     return (
         <>
@@ -24,31 +51,29 @@ function Buurtgroep() {
                         buttonNameLeft={"Alle posts"}
                         buttonNameRight={"Mijn posts"}
                     />
+                    {loading && <p>...Loading...</p>}
+                    {error && <p>Er is iets misgegaan, controleer of je verbonden bent met het internet</p>}
+                    {!error && !loading && posts.length === 0 && <p>Empty state komt hier!</p>}
+                    {!loading && posts.length > 0 && posts.map((post) => (
                     <Card
+                        key={post.id}
                         avatar={<Avatar />}
-                        title={"Adison George"}
-                        hasSubtitle={true}
-                        subtitle={"Dit is een ondertitel"}
+                        title={`${post.firstName} ${post.preposition} ${post.lastName}`}
                         buttons={<Button
                             variant={"primary"}
                             buttonText="reageren"
-                        ></Button>
+                        >
+                        </Button>
                         }
                     >
-                        <Chip chipText={"Water verversen"}/>
+                        <CardContent
+                            request={post.title}
+                            startDate={post.startDate}
+                            endDate={post.endDate}
+                            remarks={post.remark}
+                        />
                     </Card>
-                    <Card
-                        avatar={<Avatar />}
-                        title={"Chap Workman"}
-                        hasSubtitle={true}
-                        subtitle={"Dit is een ondertitel"}
-                        buttons={<Button
-                            variant={"primary"}
-                            buttonText="reageren"
-                        />}
-                    >
-                        <Chip chipText={"Water verversen"}/>
-                    </Card>
+                    ))}
                 </div>
                 <div className="footer">
                     <Button
