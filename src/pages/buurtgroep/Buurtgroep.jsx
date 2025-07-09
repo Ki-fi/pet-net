@@ -4,12 +4,14 @@ import ToggleButton from "../../components/toggle-button/ToggleButton.jsx";
 import Card from "../../components/card/Card.jsx";
 import Avatar from "../../components/avatar/Avatar.jsx";
 import Button from "../../components/button/Button.jsx";
-import CardContent from "../../components/card-content/CardContent.jsx";
 import Chip from "../../components/chip/Chip.jsx";
 import './Buurtgroep.css';
+import {useNavigate} from "react-router-dom";
 
 
 function Buurtgroep() {
+
+    const navigate = useNavigate();
 
     return (
         <>
@@ -33,9 +35,7 @@ function Buurtgroep() {
                         ></Button>
                         }
                     >
-                        <CardContent>
-                            <Chip chipText={"Kattenbak verschonen"}/>
-                        </CardContent>
+                        <Chip chipText={"Water verversen"}/>
                     </Card>
                     <Card
                         avatar={<Avatar />}
@@ -47,9 +47,7 @@ function Buurtgroep() {
                             buttonText="reageren"
                         />}
                     >
-                        <CardContent>
-                            <Chip chipText={"Water verversen"}/>
-                        </CardContent>
+                        <Chip chipText={"Water verversen"}/>
                     </Card>
                 </div>
                 <div className="footer">
@@ -57,6 +55,7 @@ function Buurtgroep() {
                         variant="fab"
                         hasIconLeft={true}
                         iconName={"add"}
+                        onClick={() => {navigate("/buurtgroep/new")}}
                     />
                 </div>
             </div>

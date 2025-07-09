@@ -5,6 +5,8 @@ import Login from "./pages/login/Login.jsx";
 import Signup from "./pages/signup/Signup.jsx";
 import SignupSuccess from "./pages/successful signup/SignupSuccess.jsx";
 import NotFound from "./pages/404/NotFound.jsx";
+import NewPost from "./pages/new post/NewPost.jsx";
+import {Navigate} from "react-router";
 
 function App() {
 
@@ -12,11 +14,12 @@ function App() {
       <>
           <div className="page-container">
           <Routes>
-              <Route path="/" element={<div></div>} />
+              <Route path="/" element={<Navigate replace to="/login" />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/signup/welcome" element={<SignupSuccess />} />
               <Route path="/login" element={<Login />} />
               <Route path="/buurtgroep" element={<Buurtgroep />} />
+              <Route path="/buurtgroep/new" element={<NewPost />} />
               <Route path="/profiel" element={<div>Profile page</div>} />
               <Route path="*" element={<NotFound />} />
           </Routes>

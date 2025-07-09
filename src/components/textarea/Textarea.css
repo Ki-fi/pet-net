@@ -1,11 +1,5 @@
 
-label {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-input {
+textarea {
     display: flex;
     flex-grow: 1;
     width: 100%;
@@ -15,7 +9,7 @@ input {
     background-color:transparent;
 }
 
-input:focus {
+textarea:focus {
     border-color: #A5B62B;
     outline: none;
 }
@@ -32,20 +26,10 @@ input:focus {
     border-color: var(--Brown-light);
 }
 
-.input-error-text {
+.textarea-error-text {
     color: var(--Brown-light);
 }
 
-input::placeholder {
+textarea::placeholder {
     color: var(--Grey-light);
-}
-
-input[type="date"] {
-    position: relative;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator {
-    position: absolute;
-    right: 16px;
-    cursor: pointer;
 }

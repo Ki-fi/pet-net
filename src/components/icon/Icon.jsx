@@ -1,8 +1,12 @@
 import './Icon.css';
 
-function Icon({ iconName }) {
+function Icon({ iconName, onClick }) {
+
     return (
-        <span className="material-symbols-outlined">{iconName}</span>
+        <span
+            className={`icon ${['material-symbols-outlined']}`}
+            onClick={onClick}
+        >{iconName}</span>
     )
 }
 
