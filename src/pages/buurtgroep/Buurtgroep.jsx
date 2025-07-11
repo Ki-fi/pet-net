@@ -84,7 +84,6 @@ function Buurtgroep() {
                             request={post.title}
                             startDate={post.startDate}
                             endDate={post.endDate}
-                            remarks={post.remark}
                         />
                     </Card>
                     ))}

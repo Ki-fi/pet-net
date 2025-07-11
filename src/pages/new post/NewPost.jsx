@@ -86,13 +86,13 @@ function NewPost() {
             <div className="buurtgroep-page">
                 <div className="menu-wrapper"><SideMenu /></div>
                 <div className="content">
-                    <PageBar pageTitle={"Nieuwe post"} iconName={"arrow_back"}/>
+                    <PageBar pageTitle={"Nieuwe post-details"} iconName={"arrow_back"}/>
                     <form className="cards-wrapper" id="new-post-form" onSubmit={handleSubmit}>
                         {step >= 1 &&
                             <div ref={cardRefs[1]}>
                             <Card
                                 title={"Gevraagd"}
-                                contentClass={"new-post-card"}
+                                contentClass={"new-post-details-card"}
                                 hasSubtitle={true}
                                 subtitle={"Waar ben je naar op zoek?"}
                             >
@@ -111,7 +111,7 @@ function NewPost() {
                             <div ref={cardRefs[1]}>
                             <Card
                                 title={"Datum"}
-                                contentClass={"new-post-card"}
+                                contentClass={"new-post-details-card"}
                                 hasSubtitle={true}
                                 subtitle={"Wanneer heb je het nodig?"}
                                 buttons={<Button
@@ -154,7 +154,7 @@ function NewPost() {
                             <div ref={cardRefs[2]}>
                             <Card
                                 title={"Services"}
-                                contentClass={"new-post-card"}
+                                contentClass={"new-post-details-card"}
                                 hasSubtitle={true}
                                 subtitle={"Welke taken moeten er worden uitgevoerd?"}
                                 buttons={
@@ -180,7 +180,7 @@ function NewPost() {
                             <div ref={cardRefs[3]}>
                             <Card
                                 title={"Bijzonderheden"}
-                                contentClass={"new-post-card"}
+                                contentClass={"new-post-details-card"}
                                 hasSubtitle={true}
                                 subtitle={"Is er nog iets dat de ander moet weten?"}
                                 buttons={<Button
@@ -203,13 +203,13 @@ function NewPost() {
                             <div ref={cardRefs[4]}>
                             <Card
                                 title={"Samenvatting"}
-                                contentClass={"new-post-card"}
+                                contentClass={"new-post-details-card"}
                                 hasSubtitle={true}
                                 subtitle={"Kloppen alle details?"}
                                 buttons={<Button
                                     variant={"primary"}
                                     type={"submit"}
-                                    form={"new-post-form"}
+                                    form={"new-post-details-form"}
                                     buttonText="Post plaatsen"
                                     onClick={() => {}}
                                 />}
