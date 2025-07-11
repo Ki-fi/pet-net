@@ -12,6 +12,7 @@ import validateNewPostInput from "../../helpers/validateNewPostInput.js";
 import CardContent from "../../components/card-content/CardContent.jsx";
 import axios from "axios";
 import Snackbar from "../../components/snackbar/Snackbar.jsx";
+import formatDate from "../../helpers/formatDate.js";
 
 function NewPost() {
 
@@ -86,13 +87,13 @@ function NewPost() {
             <div className="buurtgroep-page">
                 <div className="menu-wrapper"><SideMenu /></div>
                 <div className="content">
-                    <PageBar pageTitle={"Nieuwe post-details"} iconName={"arrow_back"}/>
+                    <PageBar pageTitle={"Nieuwe post"} iconName={"arrow_back"}/>
                     <form className="cards-wrapper" id="new-post-form" onSubmit={handleSubmit}>
                         {step >= 1 &&
                             <div ref={cardRefs[1]}>
                             <Card
                                 title={"Gevraagd"}
-                                contentClass={"new-post-details-card"}
+                                contentClass={"new-post-card"}
                                 hasSubtitle={true}
                                 subtitle={"Waar ben je naar op zoek?"}
                             >
@@ -111,7 +112,7 @@ function NewPost() {
                             <div ref={cardRefs[1]}>
                             <Card
                                 title={"Datum"}
-                                contentClass={"new-post-details-card"}
+                                contentClass={"new-post-card"}
                                 hasSubtitle={true}
                                 subtitle={"Wanneer heb je het nodig?"}
                                 buttons={<Button
@@ -154,7 +155,7 @@ function NewPost() {
                             <div ref={cardRefs[2]}>
                             <Card
                                 title={"Services"}
-                                contentClass={"new-post-details-card"}
+                                contentClass={"new-post-card"}
                                 hasSubtitle={true}
                                 subtitle={"Welke taken moeten er worden uitgevoerd?"}
                                 buttons={
@@ -180,7 +181,7 @@ function NewPost() {
                             <div ref={cardRefs[3]}>
                             <Card
                                 title={"Bijzonderheden"}
-                                contentClass={"new-post-details-card"}
+                                contentClass={"new-post-card"}
                                 hasSubtitle={true}
                                 subtitle={"Is er nog iets dat de ander moet weten?"}
                                 buttons={<Button
@@ -203,21 +204,21 @@ function NewPost() {
                             <div ref={cardRefs[4]}>
                             <Card
                                 title={"Samenvatting"}
-                                contentClass={"new-post-details-card"}
+                                contentClass={"new-post-card"}
                                 hasSubtitle={true}
                                 subtitle={"Kloppen alle details?"}
                                 buttons={<Button
                                     variant={"primary"}
                                     type={"submit"}
-                                    form={"new-post-details-form"}
+                                    form={"new-post-form"}
                                     buttonText="Post plaatsen"
                                     onClick={() => {}}
                                 />}
                             >
                                 <CardContent
                                     request={formState.request}
-                                    startDate={formState.startDate}
-                                    endDate={formState.endDate}
+                                    startDate={formatDate(formState.startDate)}
+                                    endDate={formatDate(formState.endDate)}
                                     service={formState.service}
                                     remarks={formState.remarks}
                                 />
