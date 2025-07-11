@@ -12,6 +12,7 @@ import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useParams} from "react-router";
 import axios from "axios";
+import formatDate from "../../helpers/formatDate.js";
 
 function PostDetails() {
 
@@ -73,8 +74,8 @@ function PostDetails() {
                         <Card>
                             <CardContent
                                 request={details.title}
-                                startDate={details.startDate}
-                                endDate={details.endDate}
+                                startDate={formatDate(details.startDate)}
+                                endDate={formatDate(details.endDate)}
                             />
                         </Card>
                         {details.service &&

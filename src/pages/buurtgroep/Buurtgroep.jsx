@@ -12,6 +12,7 @@ import CardContent from "../../components/card-content/CardContent.jsx";
 import Snackbar from "../../components/snackbar/Snackbar.jsx";
 import EmptyState from "../../components/empty-state/EmptyState.jsx";
 import LoadingState from "../../components/loading-state/LoadingState.jsx";
+import formatDate from "../../helpers/formatDate.js";
 
 
 function Buurtgroep() {
@@ -82,8 +83,8 @@ function Buurtgroep() {
                     >
                         <CardContent
                             request={post.title}
-                            startDate={post.startDate}
-                            endDate={post.endDate}
+                            startDate={formatDate(post.startDate)}
+                            endDate={formatDate(post.endDate)}
                         />
                     </Card>
                     ))}
