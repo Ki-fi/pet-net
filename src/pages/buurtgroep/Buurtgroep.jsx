@@ -4,12 +4,13 @@ import ToggleButton from "../../components/toggle-button/ToggleButton.jsx";
 import Card from "../../components/card/Card.jsx";
 import Avatar from "../../components/avatar/Avatar.jsx";
 import Button from "../../components/button/Button.jsx";
-import Chip from "../../components/chip/Chip.jsx";
 import './Buurtgroep.css';
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import CardContent from "../../components/card-content/CardContent.jsx";
+import Snackbar from "../../components/snackbar/Snackbar.jsx";
+import EmptyState from "../../components/empty-state/EmptyState.jsx";
 
 
 function Buurtgroep() {
@@ -20,22 +21,33 @@ function Buurtgroep() {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
+        let isMounted = true;
 
         async function fetchPosts() {
             setLoading(true);
             setError(false);
             try { const response = await axios.get('http://localhost:8080/posts');
                 const results = response.data;
-                setPosts(results);
+                if (isMounted) {
+                    setPosts(results);
+                }
             } catch (error) {
-                console.error(error);
-                setError(true);
+                if (isMounted) {
+                    console.error(error);
+                    setError(true);
+                }
             } finally {
-                setLoading(false);
+                if (isMounted) {
+                    setLoading(false);
+                }
             }
         }
 
         fetchPosts();
+
+        return () => {
+            isMounted = false;
+        }
 
     },[]);
 
@@ -52,8 +64,8 @@ function Buurtgroep() {
                         buttonNameRight={"Mijn posts"}
                     />
                     {loading && <p>...Loading...</p>}
-                    {error && <p>Er is iets misgegaan, controleer of je verbonden bent met het internet</p>}
-                    {!error && !loading && posts.length === 0 && <p>Empty state komt hier!</p>}
+                    {error && <Snackbar variant={"error"} message={"Er is iets misgegaan, controleer of je verbonden bent met het internet"}/>}
+                    {!error && !loading && posts.length === 0 && <EmptyState message={"Nog geen posts beschikbaar"}/>}
                     {!loading && posts.length > 0 && posts.map((post) => (
                     <Card
                         key={post.id}
@@ -62,6 +74,7 @@ function Buurtgroep() {
                         buttons={<Button
                             variant={"primary"}
                             buttonText="reageren"
+                            onClick={() => {navigate("/posts/" + post.id)}}
                         >
                         </Button>
                         }

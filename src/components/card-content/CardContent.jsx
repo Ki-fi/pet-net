@@ -9,11 +9,11 @@ function CardContent({ request, startDate, endDate, service, remarks }) {
             <span className="subtitle"><Icon iconName="business_center"/>{request}</span>
             <span className="subtitle"><Icon iconName="calendar_month"/>{startDate} t/m {endDate}</span>
             {service && <Chip chipText={service}/>}
-            {remarks &&
-                <>
-                <p className="subtitle">Bijzonderheden:</p>
-                <p>{remarks}</p>
-                </>}
+            {/*{remarks &&*/}
+            {/*    <div>*/}
+            {/*    <p className="subtitle">Bijzonderheden:</p>*/}
+            {/*    <p>{remarks}</p>*/}
+            {/*    </div>}*/}
         </div>
     )
 }
