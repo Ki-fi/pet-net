@@ -7,7 +7,7 @@
     padding: 0 24px;
     flex-direction: column;
     align-items: flex-start;
-    gap: 24px;
+    gap: 42px;
     flex-basis: 100vh;
     background: var(--Grey);
     box-shadow: 8px 0 0 0 #464646;
@@ -19,7 +19,8 @@
 }
 
 .side-menu img {
-    width: 150px;
+    width: 200px;
+    padding-top: 16px;
 }
 
 .menu-item {
