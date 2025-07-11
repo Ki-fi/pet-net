@@ -4,14 +4,53 @@ import ToggleButton from "../../components/toggle-button/ToggleButton.jsx";
 import Card from "../../components/card/Card.jsx";
 import Avatar from "../../components/avatar/Avatar.jsx";
 import Button from "../../components/button/Button.jsx";
-import Chip from "../../components/chip/Chip.jsx";
 import './Buurtgroep.css';
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import {useEffect, useState} from "react";
+import CardContent from "../../components/card-content/CardContent.jsx";
+import Snackbar from "../../components/snackbar/Snackbar.jsx";
+import EmptyState from "../../components/empty-state/EmptyState.jsx";
 
 
 function Buurtgroep() {
 
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        async function fetchPosts() {
+            setLoading(true);
+            setError(false);
+            try { const response = await axios.get('http://localhost:8080/posts');
+                const results = response.data;
+                if (isMounted) {
+                    setPosts(results);
+                }
+            } catch (error) {
+                if (isMounted) {
+                    console.error(error);
+                    setError(true);
+                }
+            } finally {
+                if (isMounted) {
+                    setLoading(false);
+                }
+            }
+        }
+
+        fetchPosts();
+
+        return () => {
+            isMounted = false;
+        }
+
+    },[]);
+
 
     return (
         <>
@@ -24,31 +63,30 @@ function Buurtgroep() {
                         buttonNameLeft={"Alle posts"}
                         buttonNameRight={"Mijn posts"}
                     />
+                    {loading && <p>...Loading...</p>}
+                    {error && <Snackbar variant={"error"} message={"Er is iets misgegaan, controleer of je verbonden bent met het internet"}/>}
+                    {!error && !loading && posts.length === 0 && <EmptyState message={"Nog geen posts beschikbaar"}/>}
+                    {!loading && posts.length > 0 && posts.map((post) => (
                     <Card
+                        key={post.id}
                         avatar={<Avatar />}
-                        title={"Adison George"}
-                        hasSubtitle={true}
-                        subtitle={"Dit is een ondertitel"}
+                        title={`${post.firstName} ${post.preposition} ${post.lastName}`}
                         buttons={<Button
                             variant={"primary"}
                             buttonText="reageren"
-                        ></Button>
+                            onClick={() => {navigate("/posts/" + post.id)}}
+                        >
+                        </Button>
                         }
                     >
-                        <Chip chipText={"Water verversen"}/>
+                        <CardContent
+                            request={post.title}
+                            startDate={post.startDate}
+                            endDate={post.endDate}
+                            remarks={post.remark}
+                        />
                     </Card>
-                    <Card
-                        avatar={<Avatar />}
-                        title={"Chap Workman"}
-                        hasSubtitle={true}
-                        subtitle={"Dit is een ondertitel"}
-                        buttons={<Button
-                            variant={"primary"}
-                            buttonText="reageren"
-                        />}
-                    >
-                        <Chip chipText={"Water verversen"}/>
-                    </Card>
+                    ))}
                 </div>
                 <div className="footer">
                     <Button

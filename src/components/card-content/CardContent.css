@@ -3,10 +3,12 @@
 .card-content-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 16px;
-    border-radius: 8px;
-    background: #F2F4F5;
+    align-content: stretch;
+    gap: 12px;
+    padding: 8px 0;
+    /*padding: 4px 24px 8px 24px;*/
+    /*border-left: 6px solid var(--Green-highlight);*/
+    width: 100%;
 }
 
 .card-content-wrapper span {

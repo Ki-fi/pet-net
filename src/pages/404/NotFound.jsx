@@ -16,8 +16,8 @@ function NotFound() {
                 <Button
                     type="button"
                     variant="primary"
-                    buttonText={"Terug naar login"}
-                    onClick={() => {navigate("/login")}}
+                    buttonText={"Terug naar buurtgroep"}
+                    onClick={() => {navigate("/buurtgroep")}}
                 />
             </article>
             </div>

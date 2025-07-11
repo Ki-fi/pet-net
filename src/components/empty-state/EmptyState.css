@@ -1,0 +1,10 @@
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.empty-state img{
+    width: 200px;
+}
