@@ -70,13 +70,13 @@ function Buurtgroep() {
                     {!error && !loading && posts.length === 0 && <EmptyState message={"Nog geen posts beschikbaar"}/>}
                     {!loading && posts.length > 0 && posts.map((post) => (
                     <Card
-                        key={post.id}
+                        key={post.postId}
                         avatar={<Avatar />}
                         title={`${post.firstName} ${post.preposition} ${post.lastName}`}
                         buttons={<Button
                             variant={"primary"}
                             buttonText="reageren"
-                            onClick={() => {navigate("/posts/" + post.id)}}
+                            onClick={() => {navigate("/buurtgroep/" + post.postId)}}
                         >
                         </Button>
                         }

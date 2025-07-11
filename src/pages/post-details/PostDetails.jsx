@@ -20,7 +20,7 @@ function PostDetails() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [details, setDetails] = useState([]);
+    const [details, setDetails] = useState({});
 
     useEffect(() => {
         let isMounted = true;
