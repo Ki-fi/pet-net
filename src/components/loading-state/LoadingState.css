@@ -1,0 +1,11 @@
+
+
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loading-state img{
+    width: 300px;
+}

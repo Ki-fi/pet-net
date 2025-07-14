@@ -12,6 +12,7 @@ import validateNewPostInput from "../../helpers/validateNewPostInput.js";
 import CardContent from "../../components/card-content/CardContent.jsx";
 import axios from "axios";
 import Snackbar from "../../components/snackbar/Snackbar.jsx";
+import formatDate from "../../helpers/formatDate.js";
 
 function NewPost() {
 
@@ -216,8 +217,8 @@ function NewPost() {
                             >
                                 <CardContent
                                     request={formState.request}
-                                    startDate={formState.startDate}
-                                    endDate={formState.endDate}
+                                    startDate={formatDate(formState.startDate)}
+                                    endDate={formatDate(formState.endDate)}
                                     service={formState.service}
                                     remarks={formState.remarks}
                                 />

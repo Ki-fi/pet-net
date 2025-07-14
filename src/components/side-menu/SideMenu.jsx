@@ -1,6 +1,6 @@
 import './SideMenu.css';
 import Icon from "../icon/Icon.jsx";
-import logo from '/src/assets/logo.png';
+import logo from '/src/assets/logo_S.png';
 import React from "react";
 import {useNavigate} from 'react-router-dom';
 

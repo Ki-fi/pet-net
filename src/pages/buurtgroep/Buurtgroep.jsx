@@ -11,6 +11,8 @@ import {useEffect, useState} from "react";
 import CardContent from "../../components/card-content/CardContent.jsx";
 import Snackbar from "../../components/snackbar/Snackbar.jsx";
 import EmptyState from "../../components/empty-state/EmptyState.jsx";
+import LoadingState from "../../components/loading-state/LoadingState.jsx";
+import formatDate from "../../helpers/formatDate.js";
 
 
 function Buurtgroep() {
@@ -63,27 +65,26 @@ function Buurtgroep() {
                         buttonNameLeft={"Alle posts"}
                         buttonNameRight={"Mijn posts"}
                     />
-                    {loading && <p>...Loading...</p>}
+                    {loading && <LoadingState/>}
                     {error && <Snackbar variant={"error"} message={"Er is iets misgegaan, controleer of je verbonden bent met het internet"}/>}
                     {!error && !loading && posts.length === 0 && <EmptyState message={"Nog geen posts beschikbaar"}/>}
                     {!loading && posts.length > 0 && posts.map((post) => (
                     <Card
-                        key={post.id}
+                        key={post.postId}
                         avatar={<Avatar />}
                         title={`${post.firstName} ${post.preposition} ${post.lastName}`}
                         buttons={<Button
                             variant={"primary"}
                             buttonText="reageren"
-                            onClick={() => {navigate("/posts/" + post.id)}}
+                            onClick={() => {navigate("/buurtgroep/" + post.postId)}}
                         >
                         </Button>
                         }
                     >
                         <CardContent
                             request={post.title}
-                            startDate={post.startDate}
-                            endDate={post.endDate}
-                            remarks={post.remark}
+                            startDate={formatDate(post.startDate)}
+                            endDate={formatDate(post.endDate)}
                         />
                     </Card>
                     ))}
