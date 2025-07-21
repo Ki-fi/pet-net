@@ -4,13 +4,15 @@ import logo from "/src/assets/logo.png";
 import Button from "../../components/button/Button.jsx";
 import './Login.css';
 import {Link, useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import axios from "axios";
 import Snackbar from "../../components/snackbar/Snackbar.jsx";
 import validateCredentialsOnLogin from "../../helpers/validateCredentialsOnLogin.js";
+import {AuthContext} from "../../components/AuthContext.jsx";
 
 function Login() {
 
+    const {signin} = useContext(AuthContext);
     const [formState, setFormState] = useState({
         email: "",
         password: "",
@@ -33,18 +35,22 @@ function Login() {
         setValidation(validationResult);
 
         if (!validationResult.hasErrors) {
-            login(formState);
+            login();
         }
-
-        console.log(formState.email, formState.password);
     }
 
     async function login() {
         toggleLoading(true);
 
-        try { const response = await axios.post("http://localhost:8080/login", formState)
-            if (response.status === 200) {
-                navigate("/buurtgroep");}
+        try { const response = await axios.post("http://localhost:8080/auth", {
+            email: formState.email,
+            password: formState.password,
+        },{
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+            signin(response.data);
         } catch (error) {
             setError(true)
             console.log(error);

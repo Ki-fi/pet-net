@@ -4,7 +4,7 @@ import PageBar from "../../components/page-bar/PageBar.jsx";
 import Card from "../../components/card/Card.jsx";
 import Button from "../../components/button/Button.jsx";
 import Input from "../../components/input/Input.jsx";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import { useEffect, useRef } from "react";
 import Textarea from "../../components/textarea/Textarea.jsx";
@@ -13,6 +13,7 @@ import CardContent from "../../components/card-content/CardContent.jsx";
 import axios from "axios";
 import Snackbar from "../../components/snackbar/Snackbar.jsx";
 import formatDate from "../../helpers/formatDate.js";
+import {AuthContext} from "../../components/AuthContext.jsx";
 
 function NewPost() {
 
@@ -22,13 +23,14 @@ function NewPost() {
         endDate: "",
         remarks: ""
     })
-
     const [error, setError] = useState(false);
     const [validation, setValidation] = useState(false);
     const [loading, toggleLoading] = useState(false);
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
     const [showSnackbar, setShowSnackbar] = useState(false);
+    const token = localStorage.getItem('token');
+    const storedUser = JSON.parse(localStorage.getItem("user"));
     const cardRefs = {
         1: useRef(null),
         2: useRef(null),
@@ -67,7 +69,11 @@ function NewPost() {
             "endDate": formState.endDate,
             "title": formState.request,
             "remark": formState.remarks,
-            "userId": 1
+            "userId": storedUser.id
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         });
             if (response.status === 201) {
                 setStep(5);
@@ -123,7 +129,6 @@ function NewPost() {
                                     const validationResult = validateNewPostInput(formState);
                                     setValidation(validationResult);
                                     if (!validationResult.hasErrors) {
-                                        console.log("form is valid!")
                                         setStep(2)}}
                                     }
                             />}

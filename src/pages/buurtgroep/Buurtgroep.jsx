@@ -24,11 +24,16 @@ function Buurtgroep() {
 
     useEffect(() => {
         let isMounted = true;
+        const token = localStorage.getItem('token');
 
         async function fetchPosts() {
             setLoading(true);
             setError(false);
-            try { const response = await axios.get('http://localhost:8080/posts');
+            try { const response = await axios.get('http://localhost:8080/posts', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
                 const results = response.data;
                 if (isMounted) {
                     setPosts(results);

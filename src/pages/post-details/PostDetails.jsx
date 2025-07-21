@@ -24,11 +24,14 @@ function PostDetails() {
 
     useEffect(() => {
         let isMounted = true;
+        const token = localStorage.getItem('token');
 
         async function fetchPostDetails() {
             setLoading(true);
             setError(false);
-            try { const response = await axios.get(`http://localhost:8080/posts/${id}`);
+            try { const response = await axios.get(`http://localhost:8080/posts/${id}`, {headers: {
+                    Authorization: `Bearer ${token}`
+                }});
                 const results = response.data;
                 if (isMounted) {
                     setDetails(results);
@@ -61,7 +64,7 @@ function PostDetails() {
             <div className="post-detail-page">
                 <div className="menu-wrapper"><SideMenu /></div>
                 <div className="content">
-                    <PageBar pageTitle={"Post"}/>
+                    <PageBar pageTitle={"Post"} iconName={"arrow_back"}/>
                     <div className="cards-wrapper">
                         <Card
                             avatar={<Avatar />}

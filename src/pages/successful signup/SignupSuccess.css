@@ -7,3 +7,7 @@
     min-height: 100vh;
     padding: 24px;
 }
+
+.welcome-page img {
+    max-width: 75%
+}
