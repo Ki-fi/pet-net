@@ -19,8 +19,7 @@ function SignupSuccess() {
                 <Card
                     title={"Welkom, " + firstName + "!"}
                     hasSubtitle={true}
-                    subtitle="Account aangemaakt!
-Log in om direct aan de slag te gaan"
+                    subtitle="Account aangemaakt! Log in om direct aan de slag te gaan"
                     buttons={
                         <Button
                             type={"button"}

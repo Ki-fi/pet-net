@@ -1,7 +1,6 @@
 import {createContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import LoadingState from "./loading-state/LoadingState.jsx";
-import {jwtDecode} from "jwt-decode";
 import isTokenValid from "../helpers/isTokenValid.js";
 
 export const AuthContext = createContext({});
@@ -17,13 +16,12 @@ function AuthContextProvider({ children }) {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if (token && isTokenValid(token)) {
-            const decoded = jwtDecode(token);
+        const storedUser = localStorage.getItem('user');
+        if (token && isTokenValid(token) && storedUser) {
+            const user = JSON.parse(storedUser);
             setAuth({
                 isAuth: true,
-                user: {
-                    email: decoded.sub || decoded.email,
-                },
+                user,
                 status: 'done',
             })
         } else {
@@ -34,11 +32,10 @@ function AuthContextProvider({ children }) {
 
     function signin(userDetails) {
         localStorage.setItem('token', userDetails.token);
+        localStorage.setItem('user', JSON.stringify(userDetails.user));
         setAuth({
             isAuth: true,
-            user: {
-                email: userDetails.user.email
-            },
+            user: userDetails.user,
             status: 'done',
         });
         navigate("/buurtgroep");
@@ -56,7 +53,6 @@ function AuthContextProvider({ children }) {
 
     const data = {
         isAuth: auth.isAuth,
-        userId: 1,
         signin,
         logout
     };

@@ -24,9 +24,9 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/signup/welcome" element={<SignupSuccess />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/buurtgroep" element={ isAuth === true ? <Buurtgroep /> : <Navigate to="/login"/>} />
-              <Route path="/buurtgroep/new" element={<NewPost />} />
-              <Route path="/buurtgroep/:id" element={<PostDetails />} />
+              <Route path="/buurtgroep" element={ isAuth === true ? <Buurtgroep /> : <Navigate to="/login"/> } />
+              <Route path="/buurtgroep/new" element={ isAuth === true ? <NewPost /> : <Navigate to="/login"/> } />
+              <Route path="/buurtgroep/:id" element={ isAuth === true ? <PostDetails /> : <Navigate to="/login"/> } />
               <Route path="/profiel" element={<div>Profile page</div>} />
               <Route path="*" element={<NotFound />} />
           </Routes>

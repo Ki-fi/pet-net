@@ -37,8 +37,6 @@ function Login() {
         if (!validationResult.hasErrors) {
             login();
         }
-
-        console.log(formState.email, formState.password);
     }
 
     async function login() {
