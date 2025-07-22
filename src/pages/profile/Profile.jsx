@@ -12,10 +12,12 @@ import Button from "../../components/button/Button.jsx";
 import CardContent from "../../components/card-content/CardContent.jsx";
 import formatDate from "../../helpers/formatDate.js";
 import placeholder from '/src/assets/avatar_2.png';
+import Drawer from "../../components/drawer/Drawer.jsx";
 
 function Profile() {
 
     const [upload, setUpload] = useState(null);
+    const [drawer, toggleDrawer] = useState(false);
 
     // useEffect(() => {}, [])
 
@@ -33,7 +35,8 @@ function Profile() {
                             buttons={<Button
                                 variant={"secondary"}
                                 buttonText="wijzigen"
-                                onClick={() => {}}
+                                onClick={() => {toggleDrawer(true)}
+                            }
                             >
                             </Button>
                             }
@@ -42,8 +45,21 @@ function Profile() {
                                 {upload ? <img src={upload} alt="avatar"/> : <img src={placeholder} alt="avatar"/>}
                             </div>
                         </Card>
+                        <Card title={`Persoonsgegevens`}>
+                            <form className="personal-details">
+                                <label className="subtitle">Emailadres
+                                <p className="default-body-text">emailaddress here</p>
+                                </label>
+                                <label className="subtitle">Naam
+                                    <p className="default-body-text">full name here</p>
+                                </label>
+                            </form>
+                        </Card>
                     {/*}*/}
                 </div>
+            </div>
+            <div className="upload-drawer">
+                {drawer === true && <Drawer/>}
             </div>
         </div>
     )

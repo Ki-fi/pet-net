@@ -14,3 +14,13 @@
 .profile-picture img {
     width: 100%;
 }
+
+.personal-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.upload-drawer {
+    z-index: 3;
+}
