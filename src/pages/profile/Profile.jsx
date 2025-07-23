@@ -1,26 +1,29 @@
 import './Profile.css';
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import SideMenu from "../../components/side-menu/SideMenu.jsx";
 import PageBar from "../../components/page-bar/PageBar.jsx";
-import ToggleButton from "../../components/toggle-button/ToggleButton.jsx";
 import LoadingState from "../../components/loading-state/LoadingState.jsx";
 import Snackbar from "../../components/snackbar/Snackbar.jsx";
-import EmptyState from "../../components/empty-state/EmptyState.jsx";
 import Card from "../../components/card/Card.jsx";
 import Button from "../../components/button/Button.jsx";
 import placeholder from '/src/assets/avatar_2.png';
 import Drawer from "../../components/drawer/Drawer.jsx";
 import Input from "../../components/input/Input.jsx";
 import validateFileUpload from "../../helpers/validateFileUpload.js";
+import axios from "axios";
+import {AuthContext} from "../../components/AuthContext.jsx";
 
 function Profile() {
 
     const [upload, setUpload] = useState(null);
     const [preview, setPreview] = useState(null);
+    const token = localStorage.getItem('token');
+    const storedUser = JSON.parse(localStorage.getItem("user"));
     const [drawer, toggleDrawer] = useState(false);
     const [loading, toggleLoading] = useState(false);
     const [validation, setValidation] = useState(false);
     const [error, setError] = useState(false);
+    const {logout} = useContext(AuthContext);
 
     // useEffect(() => {}, [])
 
@@ -39,17 +42,35 @@ function Profile() {
         setValidation(validationResult);
 
         if (validationResult === false) {
-            setValidation(true);
+            setValidation(validationResult);
         } else {
-            setPreview(URL.createObjectURL(upload));
             uploadFile();
         }
-
-        // toggleDrawer(false);
     }
 
     async function uploadFile() {
+        const formData = new FormData();
+        formData.append("file", upload);
 
+        try { const response = await axios.post("http://localhost:8080/avatar",
+            {
+                "userId": storedUser.id,
+                "avatar": formData,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data",
+            }
+        })
+        } catch (error) {
+            setError(true);
+            console.log(error);
+        } finally {
+            toggleLoading(false);
+            toggleDrawer(false);
+            setPreview(URL.createObjectURL(upload));
+        }
     }
 
     return (
@@ -87,6 +108,17 @@ function Profile() {
                                 </label>
                             </form>
                         </Card>
+                        <Card
+                            title={`Uitloggen`}
+                            buttons={<Button
+                                variant={"primary"}
+                                buttonText="Uitloggen"
+                                onClick={() => {logout()}
+                                }
+                            >
+                            </Button>
+                            }
+                        />
                         </>
                     }
                 </div>
