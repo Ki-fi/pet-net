@@ -7,19 +7,50 @@ import LoadingState from "../../components/loading-state/LoadingState.jsx";
 import Snackbar from "../../components/snackbar/Snackbar.jsx";
 import EmptyState from "../../components/empty-state/EmptyState.jsx";
 import Card from "../../components/card/Card.jsx";
-import Avatar from "../../components/avatar/Avatar.jsx";
 import Button from "../../components/button/Button.jsx";
-import CardContent from "../../components/card-content/CardContent.jsx";
-import formatDate from "../../helpers/formatDate.js";
 import placeholder from '/src/assets/avatar_2.png';
 import Drawer from "../../components/drawer/Drawer.jsx";
+import Input from "../../components/input/Input.jsx";
+import validateFileUpload from "../../helpers/validateFileUpload.js";
 
 function Profile() {
 
     const [upload, setUpload] = useState(null);
+    const [preview, setPreview] = useState(null);
     const [drawer, toggleDrawer] = useState(false);
+    const [loading, toggleLoading] = useState(false);
+    const [validation, setValidation] = useState(false);
+    const [error, setError] = useState(false);
 
     // useEffect(() => {}, [])
+
+    function handleChange(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        setUpload(file);
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        setError(false);
+        setValidation(false);
+
+        const validationResult = validateFileUpload(upload);
+        setValidation(validationResult);
+
+        if (validationResult === false) {
+            setValidation(true);
+        } else {
+            setPreview(URL.createObjectURL(upload));
+            uploadFile();
+        }
+
+        // toggleDrawer(false);
+    }
+
+    async function uploadFile() {
+
+    }
 
     return (
         <div className="profile-page">
@@ -27,9 +58,10 @@ function Profile() {
             <div className="content">
                 <PageBar pageTitle={"Profiel"}/>
                 <div className="cards-wrapper">
-                    {/*{loading && <LoadingState/>}*/}
-                    {/*{error && <Snackbar variant={"error"} message={"Er is iets misgegaan, controleer of je verbonden bent met het internet"}/>}*/}
-                    {/*{!loading &&*/}
+                    {loading && <LoadingState/>}
+                    {error && <Snackbar variant={"error"} message={"Er is iets misgegaan, controleer of je verbonden bent met het internet"}/>}
+                    {!loading &&
+                        <>
                         <Card
                             title={`Profielfoto`}
                             buttons={<Button
@@ -42,7 +74,7 @@ function Profile() {
                             }
                         >
                             <div className="profile-picture">
-                                {upload ? <img src={upload} alt="avatar"/> : <img src={placeholder} alt="avatar"/>}
+                                {preview ? <img src={preview} alt="avatar"/> : <img src={placeholder} alt="avatar"/>}
                             </div>
                         </Card>
                         <Card title={`Persoonsgegevens`}>
@@ -55,11 +87,46 @@ function Profile() {
                                 </label>
                             </form>
                         </Card>
-                    {/*}*/}
+                        </>
+                    }
                 </div>
             </div>
             <div className="upload-drawer">
-                {drawer === true && <Drawer/>}
+                {drawer === true && <Drawer
+                    title="profielfoto wijzigen"
+                    buttons={
+                    <>
+                        <Button
+                            type="button"
+                            variant="secondary"
+                            buttonText={"Annuleren"}
+                            isDisabled={loading === true}
+                            onClick={() => {toggleDrawer(false)}}
+                        />
+                        <Button
+                            type="submit"
+                            variant="primary"
+                            buttonText={"Opslaan"}
+                            isDisabled={loading === true}
+                            form="file-upload-form"
+                         />
+                    </>
+                    }
+                >
+                    <form id="file-upload-form" onSubmit={handleSubmit}>
+                        <Input
+                            theme={"dark"}
+                            type="file"
+                            label={"Bestand uploaden"}
+                            name="file"
+                            placeholderText={"Nog geen bestand gekozen"}
+                            onChange={handleChange}
+                            hasError={validation}
+                            errorMessage={"Kies .jpg/.png/.gif/.tiff/.svg van max. 5MB"}
+                            accept="image/*"
+                        />
+                    </form>
+                </Drawer>}
             </div>
         </div>
     )

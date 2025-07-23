@@ -22,5 +22,22 @@
 }
 
 .upload-drawer {
-    z-index: 3;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--Text-dark);
+    z-index: 4;
+}
+
+@media screen and (max-width: 768px) {
+    .profile-page {
+        flex-direction: column;
+    }
+
+    .upload-drawer {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+    }
+
 }

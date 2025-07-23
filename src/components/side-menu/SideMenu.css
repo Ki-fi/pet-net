@@ -60,7 +60,7 @@
         left: 0;
         width: calc(100% - 32px);
         margin: 0 16px 24px 16px;
-        z-index: 1000;
+        z-index: 3;
     }
 
     .bottom-menu ul{

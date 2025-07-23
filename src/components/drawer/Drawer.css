@@ -34,12 +34,18 @@
     color: var(--Text-light);
 }
 
+.drawer-buttons {
+    display: flex;
+    gap: 16px;
+}
+
 @media screen and (max-width: 768px) {
     .drawer {
         width: 100vw;
-        height: 50%;
+        height: 600px;
         padding: 24px;
         flex-grow: 1;
         box-shadow: 0 -8px 0 0 var(--Text-dark);
+        z-index: 9999;
     }
 }

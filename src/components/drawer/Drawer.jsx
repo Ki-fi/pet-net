@@ -10,7 +10,9 @@ function Drawer({ title, children, buttons, footertext }) {
                 </div>
                 <div className="drawer-footer">
                     {footertext}
+                    <div className="drawer-buttons">
                     {buttons}
+                    </div>
                 </div>
             </div>
         </>
