@@ -52,24 +52,20 @@ function Profile() {
         const formData = new FormData();
         formData.append("file", upload);
 
-        try { const response = await axios.post("http://localhost:8080/avatar",
-            {
-                "userId": storedUser.id,
-                "avatar": formData,
-            },
+        try { const response = await axios.post(`http://localhost:8080/users/${storedUser.id}/avatar`, formData,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "multipart/form-data",
             }
         })
+            toggleDrawer(false);
+            setPreview(URL.createObjectURL(upload));
         } catch (error) {
             setError(true);
             console.log(error);
         } finally {
             toggleLoading(false);
-            toggleDrawer(false);
-            setPreview(URL.createObjectURL(upload));
         }
     }
 

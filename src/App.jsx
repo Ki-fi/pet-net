@@ -27,7 +27,7 @@ function App() {
               <Route path="/buurtgroep" element={ isAuth === true ? <Buurtgroep /> : <Navigate to="/login"/> } />
               <Route path="/buurtgroep/new" element={ isAuth === true ? <NewPost /> : <Navigate to="/login"/> } />
               <Route path="/buurtgroep/:id" element={ isAuth === true ? <PostDetails /> : <Navigate to="/login"/> } />
-              <Route path="/profiel" element={<Profile />} />
+              <Route path="/profiel" element={ isAuth === true ? <Profile /> : <Navigate to="/login"/>} />
               <Route path="*" element={<NotFound />} />
           </Routes>
           </div>
