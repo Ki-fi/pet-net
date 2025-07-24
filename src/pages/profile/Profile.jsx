@@ -25,7 +25,58 @@ function Profile() {
     const [error, setError] = useState(false);
     const {logout} = useContext(AuthContext);
 
-    // useEffect(() => {}, [])
+    useEffect(() => {
+        let isMounted = true;
+        let objectUrl = null;
+
+        async function fetchAvatar() {
+            toggleLoading(true);
+            setError(false);
+
+            try { const response = await axios.get(`http://localhost:8080/users/${storedUser.id}/avatar`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data",
+                },
+                responseType: 'blob',
+                validateStatus: (status) => {
+                    return status === 200 || status === 204;
+                }
+            });
+                if (!isMounted) return;
+                if (response.status === 204) {
+                    setPreview(null);
+                } else if (response.status === 200) {
+                    objectUrl = URL.createObjectURL(response.data);
+                    setPreview(objectUrl);
+                }
+            } catch (error) {
+                if (isMounted) {
+                    console.error(error);
+                    setError(true);
+                }
+            } finally {
+                if (isMounted) {
+                    toggleLoading(false);
+                }
+            }
+        }
+
+        fetchAvatar();
+
+        return () => {
+            isMounted = false;
+        }
+
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            if (preview && preview.startsWith("blob:")) {
+                URL.revokeObjectURL(preview);
+            }
+        };
+    }, [preview]);
 
     function handleChange(e) {
         const file = e.target.files[0];
@@ -52,7 +103,7 @@ function Profile() {
         const formData = new FormData();
         formData.append("file", upload);
 
-        try { const response = await axios.post(`http://localhost:8080/users/${storedUser.id}/avatar`, formData,
+        try { const response = await axios.put(`http://localhost:8080/users/${storedUser.id}/avatar`, formData,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
