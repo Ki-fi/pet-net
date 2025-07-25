@@ -67,7 +67,7 @@ function PostDetails() {
                     <PageBar pageTitle={"Post"} iconName={"arrow_back"}/>
                     <div className="cards-wrapper">
                         <Card
-                            avatar={<Avatar />}
+                            avatar={<Avatar upload={`http://localhost:8080${details.avatar}`}/>}
                             title={`${details.firstName} ${details.preposition} ${details.lastName}`}
                         />
                         <ToggleButton
