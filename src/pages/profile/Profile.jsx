@@ -141,10 +141,12 @@ function Profile() {
                         <Card title={`Persoonsgegevens`}>
                             <form className="personal-details">
                                 <label className="subtitle">Emailadres
-                                <p className="default-body-text">{details && details.email}</p>
+                                <p className="default-body-text">{details?.email ? details.email : ""}</p>
                                 </label>
                                 <label className="subtitle">Naam
-                                    <p className="default-body-text">{details && `${details.firstName} ${details.preposition} ${details.lastName}`}</p>
+                                    <p className="default-body-text">{details?.firstName || details?.preposition || details?.lastName
+                                        ? `${details.firstName ?? ''} ${details.preposition ?? ''} ${details.lastName ?? ''}`.trim()
+                                        : ''}</p>
                                 </label>
                             </form>
                         </Card>
