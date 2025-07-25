@@ -17,6 +17,7 @@ function Profile() {
 
     const [upload, setUpload] = useState(null);
     const [preview, setPreview] = useState(null);
+    const [details, setDetails] = useState({});
     const token = localStorage.getItem('token');
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const [drawer, toggleDrawer] = useState(false);
@@ -26,57 +27,42 @@ function Profile() {
     const {logout} = useContext(AuthContext);
 
     useEffect(() => {
+
         let isMounted = true;
-        let objectUrl = null;
-
-        async function fetchAvatar() {
-            toggleLoading(true);
-            setError(false);
-
-            try { const response = await axios.get(`http://localhost:8080/users/${storedUser.id}/avatar`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data",
-                },
-                responseType: 'blob',
-                validateStatus: (status) => {
-                    return status === 200 || status === 204;
-                }
-            });
-                if (!isMounted) return;
-                if (response.status === 204) {
-                    setPreview(null);
-                } else if (response.status === 200) {
-                    objectUrl = URL.createObjectURL(response.data);
-                    setPreview(objectUrl);
-                }
-            } catch (error) {
-                if (isMounted) {
-                    console.error(error);
-                    setError(true);
-                }
-            } finally {
-                if (isMounted) {
-                    toggleLoading(false);
-                }
-            }
-        }
-
-        fetchAvatar();
-
+        fetchProfile(isMounted);
         return () => {
             isMounted = false;
         }
 
     }, []);
 
-    useEffect(() => {
-        return () => {
-            if (preview && preview.startsWith("blob:")) {
-                URL.revokeObjectURL(preview);
+    async function fetchProfile(isMounted) {
+        toggleLoading(true);
+        setError(false);
+
+        try { const response = await axios.get(`http://localhost:8080/users/${storedUser.id}/profile`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
             }
-        };
-    }, [preview]);
+        });
+            if (!isMounted) return;
+            if (response.status === 204) {
+                setPreview(null);
+            } else if (response.status === 200) {
+                setPreview(`http://localhost:8080${response.data.avatar}`);
+                setDetails(response.data);
+            }
+        } catch (error) {
+            if (isMounted) {
+                console.error(error);
+                setError(true);
+            }
+        } finally {
+            if (isMounted) {
+                toggleLoading(false);
+            }
+        }
+    }
 
     function handleChange(e) {
         const file = e.target.files[0];
@@ -87,13 +73,12 @@ function Profile() {
     function handleSubmit(e) {
         e.preventDefault();
         setError(false);
-        setValidation(false);
 
         const validationResult = validateFileUpload(upload);
         setValidation(validationResult);
 
-        if (validationResult === false) {
-            setValidation(validationResult);
+        if (!validationResult) {
+            setValidation(true);
         } else {
             uploadFile();
         }
@@ -111,7 +96,8 @@ function Profile() {
             }
         })
             toggleDrawer(false);
-            setPreview(URL.createObjectURL(upload));
+            setValidation(false);
+            await fetchProfile();
         } catch (error) {
             setError(true);
             console.log(error);
@@ -142,16 +128,23 @@ function Profile() {
                             }
                         >
                             <div className="profile-picture">
-                                {preview ? <img src={preview} alt="avatar"/> : <img src={placeholder} alt="avatar"/>}
+                                <img
+                                    src={preview || placeholder}
+                                    alt="avatar"
+                                    onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src = placeholder;
+                                    }}
+                                />
                             </div>
                         </Card>
                         <Card title={`Persoonsgegevens`}>
                             <form className="personal-details">
                                 <label className="subtitle">Emailadres
-                                <p className="default-body-text">emailaddress here</p>
+                                <p className="default-body-text">{details && details.email}</p>
                                 </label>
                                 <label className="subtitle">Naam
-                                    <p className="default-body-text">full name here</p>
+                                    <p className="default-body-text">{details && `${details.firstName} ${details.preposition} ${details.lastName}`}</p>
                                 </label>
                             </form>
                         </Card>
