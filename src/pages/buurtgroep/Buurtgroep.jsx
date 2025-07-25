@@ -76,7 +76,7 @@ function Buurtgroep() {
                     {!loading && posts.length > 0 && posts.map((post) => (
                     <Card
                         key={post.postId}
-                        avatar={<Avatar />}
+                        avatar={<Avatar upload={`http://localhost:8080${post.avatar}`}/>}
                         title={`${post.firstName} ${post.preposition} ${post.lastName}`}
                         buttons={<Button
                             variant={"primary"}

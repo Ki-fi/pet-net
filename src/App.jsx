@@ -10,7 +10,7 @@ import PostDetails from "./pages/post-details/PostDetails.jsx";
 import {Navigate} from "react-router";
 import {AuthContext} from "./components/AuthContext.jsx";
 import {useContext} from "react";
-import LoadingState from "./components/loading-state/LoadingState.jsx";
+import Profile from "./pages/profile/Profile.jsx";
 
 function App() {
 
@@ -27,7 +27,7 @@ function App() {
               <Route path="/buurtgroep" element={ isAuth === true ? <Buurtgroep /> : <Navigate to="/login"/> } />
               <Route path="/buurtgroep/new" element={ isAuth === true ? <NewPost /> : <Navigate to="/login"/> } />
               <Route path="/buurtgroep/:id" element={ isAuth === true ? <PostDetails /> : <Navigate to="/login"/> } />
-              <Route path="/profiel" element={<div>Profile page</div>} />
+              <Route path="/profiel" element={ isAuth === true ? <Profile /> : <Navigate to="/login"/>} />
               <Route path="*" element={<NotFound />} />
           </Routes>
           </div>
