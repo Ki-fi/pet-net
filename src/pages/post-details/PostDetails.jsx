@@ -9,7 +9,7 @@ import Avatar from "../../components/avatar/Avatar.jsx";
 import Button from "../../components/button/Button.jsx";
 import CardContent from "../../components/card-content/CardContent.jsx";
 import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useParams} from "react-router";
 import axios from "axios";
 import formatDate from "../../helpers/formatDate.js";
@@ -21,6 +21,7 @@ function PostDetails() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [details, setDetails] = useState({});
+    const [selected, setSelected] = React.useState('left');
 
     useEffect(() => {
         let isMounted = true;
@@ -73,6 +74,8 @@ function PostDetails() {
                         <ToggleButton
                             buttonNameLeft={"Details"}
                             buttonNameRight={"Reageren"}
+                            selected={selected}
+                            handleToggle={setSelected}
                         />
                         <Card>
                             <CardContent

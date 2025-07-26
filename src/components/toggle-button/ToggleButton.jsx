@@ -1,13 +1,7 @@
 import './ToggleButton.css';
 import React from "react";
 
-function ToggleButton({ buttonNameLeft, buttonNameRight }) {
-
-    const [selected, setSelected] = React.useState('left');
-
-    const handleToggle = (side) => {
-        setSelected(side);
-    }
+function ToggleButton({ buttonNameLeft, buttonNameRight, selected, handleToggle }) {
 
     return (
         <div className="button-wrapper">
