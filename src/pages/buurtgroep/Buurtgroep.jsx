@@ -67,6 +67,8 @@ function Buurtgroep() {
             ? filterPostsOnId(storedUser, posts)
             : posts;
 
+    const sortedPosts = [...myPosts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
     return (
         <>
             <div className="buurtgroep-page">
@@ -82,8 +84,8 @@ function Buurtgroep() {
                     />
                     {loading && <LoadingState/>}
                     {error && <Snackbar variant={"error"} message={"Er is iets misgegaan, controleer of je verbonden bent met het internet"}/>}
-                    {!error && !loading && myPosts.length === 0 && <EmptyState message={"Nog geen posts beschikbaar"}/>}
-                    {!loading && myPosts.length > 0 && myPosts.map((post) => (
+                    {!error && !loading && sortedPosts.length === 0 && <EmptyState message={"Nog geen posts beschikbaar"}/>}
+                    {!loading && sortedPosts.length > 0 && sortedPosts.map((post) => (
                     <Card
                         key={post.postId}
                         avatar={<Avatar upload={`http://localhost:8080${post.avatar}`}/>}
