@@ -92,7 +92,7 @@ function Buurtgroep() {
                         title={`${post.firstName} ${post.preposition} ${post.lastName}`}
                         buttons={<Button
                             variant={"primary"}
-                            buttonText="reageren"
+                            buttonText="bekijken"
                             onClick={() => {navigate("/buurtgroep/" + post.postId)}}
                         />
                         }

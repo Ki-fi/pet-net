@@ -14,6 +14,9 @@ import {useParams} from "react-router";
 import axios from "axios";
 import formatDate from "../../helpers/formatDate.js";
 import EmptyState from "../../components/empty-state/EmptyState.jsx";
+import Drawer from "../../components/drawer/Drawer.jsx";
+import Input from "../../components/input/Input.jsx";
+import Textarea from "../../components/textarea/Textarea.jsx";
 
 function PostDetails() {
 
@@ -21,10 +24,13 @@ function PostDetails() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [validation, setValidation] = useState(false);
     const [details, setDetails] = useState({});
     const [responses, setResponses] = useState({});
     const [selected, setSelected] = React.useState('left');
     const [drawer, toggleDrawer] = React.useState(false);
+    const [formState, setFormState] = useState({
+        comment: "" })
 
     useEffect(() => {
         let isMounted = true;
@@ -39,7 +45,6 @@ function PostDetails() {
                 if (isMounted) {
                     setDetails(response.data);
                     setResponses(response.data.responses);
-                    console.log(response.data.responses);
                 }
             } catch (error) {
                 if (isMounted) {
@@ -60,6 +65,16 @@ function PostDetails() {
         }
 
     },[id]);
+
+    function handleChange(e) {
+        setFormState({ ...formState, [e.target.name]: e.target.value });
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        setError(false);
+    }
+
 
     if (loading) return <LoadingState/>;
     if (error) return <Snackbar variant={"error"} message={"Er is iets misgegaan, controleer of je verbonden bent met het internet"}/>
@@ -130,14 +145,12 @@ function PostDetails() {
                                 handleToggle={setSelected}
                             />
                             {responses && responses.length === 0 &&
-                            <>
-                                <EmptyState message={"Nog geen reactie verstuurd"}/>
-                                <Button
-                                    variant={"primary"}
+                                <EmptyState
+                                    message={"Nog geen reactie verstuurd"}
+                                    hasButton={true}
                                     buttonText={"reageren"}
-                                    onClick={() => {toggleDrawer(true)}}
-                                />
-                            </>}
+                                    onClick={() => toggleDrawer(true)}
+                                />}
                             {responses && responses.length > 0 && responses.map((response) => (
                                 <Card
                                     key={response.responseId}
@@ -153,6 +166,42 @@ function PostDetails() {
                                 </Card>
                             ))}
                         </div>
+                    </div>
+                    <div className="upload-drawer">
+                        {drawer === true && <Drawer
+                            title="reageren"
+                            buttons={
+                                <>
+                                    <Button
+                                        type="button"
+                                        variant="secondary"
+                                        buttonText={"Annuleren"}
+                                        isDisabled={loading === true}
+                                        onClick={() => {toggleDrawer(false)}}
+                                    />
+                                    <Button
+                                        type="submit"
+                                        variant="primary"
+                                        buttonText={"Versturen"}
+                                        isDisabled={loading === true}
+                                        form="apply-form"
+                                    />
+                                </>
+                            }
+                        >
+                            <form id="apply-form" onSubmit={handleSubmit}>
+                                <Textarea
+                                    theme={"dark"}
+                                    value={formState.comment}
+                                    label={"Zeg hallo en stem de laatste zaken af"}
+                                    name="comment"
+                                    placeholderText="Schrijf een bericht"
+                                    hasError={validation.comment}
+                                    errorMessage={"Schrijf een bericht"}
+                                    onChange={handleChange}
+                                />
+                            </form>
+                        </Drawer>}
                     </div>
                 </div>
         )
