@@ -94,8 +94,7 @@ function Buurtgroep() {
                             variant={"primary"}
                             buttonText="reageren"
                             onClick={() => {navigate("/buurtgroep/" + post.postId)}}
-                        >
-                        </Button>
+                        />
                         }
                     >
                         <CardContent

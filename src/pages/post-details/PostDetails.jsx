@@ -13,6 +13,7 @@ import React, {useEffect, useState} from "react";
 import {useParams} from "react-router";
 import axios from "axios";
 import formatDate from "../../helpers/formatDate.js";
+import EmptyState from "../../components/empty-state/EmptyState.jsx";
 
 function PostDetails() {
 
@@ -21,7 +22,9 @@ function PostDetails() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [details, setDetails] = useState({});
+    const [responses, setResponses] = useState({});
     const [selected, setSelected] = React.useState('left');
+    const [drawer, toggleDrawer] = React.useState(false);
 
     useEffect(() => {
         let isMounted = true;
@@ -33,9 +36,10 @@ function PostDetails() {
             try { const response = await axios.get(`http://localhost:8080/posts/${id}`, {headers: {
                     Authorization: `Bearer ${token}`
                 }});
-                const results = response.data;
                 if (isMounted) {
-                    setDetails(results);
+                    setDetails(response.data);
+                    setResponses(response.data.responses);
+                    console.log(response.data.responses);
                 }
             } catch (error) {
                 if (isMounted) {
@@ -60,50 +64,100 @@ function PostDetails() {
     if (loading) return <LoadingState/>;
     if (error) return <Snackbar variant={"error"} message={"Er is iets misgegaan, controleer of je verbonden bent met het internet"}/>
 
-    return (
-        <>
-            <div className="post-detail-page">
-                <div className="menu-wrapper"><SideMenu /></div>
-                <div className="content">
-                    <PageBar pageTitle={"Post"} iconName={"arrow_back"}/>
-                    <div className="cards-wrapper">
-                        <Card
-                            avatar={<Avatar upload={`http://localhost:8080${details.avatar}`}/>}
-                            title={`${details.firstName} ${details.preposition} ${details.lastName}`}
-                        />
-                        <ToggleButton
-                            buttonNameLeft={"Details"}
-                            buttonNameRight={"Reageren"}
-                            selected={selected}
-                            handleToggle={setSelected}
-                        />
-                        <Card>
-                            <CardContent
-                                request={details.title}
-                                startDate={formatDate(details.startDate)}
-                                endDate={formatDate(details.endDate)}
-                            />
-                        </Card>
-                        {details.service &&
-                            <Card title={"Services"}>
-                                <p className="subtitle">{details.service.title}</p>
-                                <p>{details.service.body}</p>
-                            </Card>
-                        }
-                        {details.remark &&
-                        <Card title={"Bijzonderheden"}>
-                            <p className="subtitle">Bijzonderheden:</p>
-                            <p>{details.remark}</p>
-                        </Card>
-                        }
-                    </div>
-                    <div className="footer">
+    const postDetails = selected === "left";
+    const applications = selected === "right";
 
+    if (postDetails) {
+        return (
+                <div className="post-detail-page">
+                    <div className="menu-wrapper"><SideMenu /></div>
+                    <div className="content">
+                        <PageBar pageTitle={"Post"} iconName={"arrow_back"}/>
+                        <div className="cards-wrapper">
+                            <Card
+                                avatar={<Avatar upload={`http://localhost:8080${details.avatar}`}/>}
+                                title={`${details.firstName} ${details.preposition} ${details.lastName}`}
+                            />
+                            <ToggleButton
+                                buttonNameLeft={"Details"}
+                                buttonNameRight={"Reageren"}
+                                selected={selected}
+                                handleToggle={setSelected}
+                            />
+                            <Card>
+                                <CardContent
+                                    request={details.title}
+                                    startDate={formatDate(details.startDate)}
+                                    endDate={formatDate(details.endDate)}
+                                />
+                            </Card>
+                            {details.service &&
+                                <Card title={"Services"}>
+                                    <p className="subtitle">{details.service.title}</p>
+                                    <p>{details.service.body}</p>
+                                </Card>
+                            }
+                            {details.remark &&
+                                <Card title={"Bijzonderheden"}>
+                                    <p className="subtitle">Bijzonderheden:</p>
+                                    <p>{details.remark}</p>
+                                </Card>
+                            }
+                        </div>
+                        <div className="footer">
+
+                        </div>
                     </div>
                 </div>
-            </div>
-        </>
-    )
+        )
+    }
+
+    if (applications) {
+        return (
+                <div className="post-detail-page">
+                    <div className="menu-wrapper"><SideMenu /></div>
+                    <div className="content">
+                        <PageBar pageTitle={"Post"} iconName={"arrow_back"}/>
+                        <div className="cards-wrapper">
+                            <Card
+                                avatar={<Avatar upload={`http://localhost:8080${details.avatar}`}/>}
+                                title={`${details.firstName} ${details.preposition} ${details.lastName}`}
+                            />
+                            <ToggleButton
+                                buttonNameLeft={"Details"}
+                                buttonNameRight={"Reageren"}
+                                selected={selected}
+                                handleToggle={setSelected}
+                            />
+                            {responses && responses.length === 0 &&
+                            <>
+                                <EmptyState message={"Nog geen reactie verstuurd"}/>
+                                <Button
+                                    variant={"primary"}
+                                    buttonText={"reageren"}
+                                    onClick={() => {toggleDrawer(true)}}
+                                />
+                            </>}
+                            {responses && responses.length > 0 && responses.map((response) => (
+                                <Card
+                                    key={response.responseId}
+                                    buttons={
+                                    <Button
+                                        variant={"primary"}
+                                        buttonText={"reageren"}
+                                        onClick={() => {toggleDrawer(true)}}
+                                    />}
+                                >
+                                    <p className="subtitle">{`${response.firstName} ${response.preposition} ${response.lastName} op ${formatDate(response.createdAt)}`}</p>
+                                    <p>{response.comment}</p>
+                                </Card>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+        )
+    }
+
 }
 
 export default PostDetails;
