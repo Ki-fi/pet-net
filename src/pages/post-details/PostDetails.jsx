@@ -15,7 +15,6 @@ import axios from "axios";
 import formatDate from "../../helpers/formatDate.js";
 import EmptyState from "../../components/empty-state/EmptyState.jsx";
 import Drawer from "../../components/drawer/Drawer.jsx";
-import Input from "../../components/input/Input.jsx";
 import Textarea from "../../components/textarea/Textarea.jsx";
 
 function PostDetails() {
@@ -24,7 +23,9 @@ function PostDetails() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [validation, setValidation] = useState(false);
+    const [validation, setValidation] = useState({
+        comment: false,
+    });
     const [details, setDetails] = useState({});
     const [responses, setResponses] = useState({});
     const [selected, setSelected] = React.useState('left');
@@ -32,43 +33,40 @@ function PostDetails() {
     const [showSnackbar, setShowSnackbar] = useState(false);
     const token = localStorage.getItem('token');
     const storedUser = JSON.parse(localStorage.getItem("user"));
-    let currentDate = new Date(Date.now());
     const [formState, setFormState] = useState({
         comment: "" })
 
     useEffect(() => {
+
         let isMounted = true;
-        const token = localStorage.getItem('token');
-
-        async function fetchPostDetails() {
-            setLoading(true);
-            setError(false);
-            try { const response = await axios.get(`http://localhost:8080/posts/${id}`, {headers: {
-                    Authorization: `Bearer ${token}`
-                }});
-                if (isMounted) {
-                    setDetails(response.data);
-                    setResponses(response.data.responses);
-                }
-            } catch (error) {
-                if (isMounted) {
-                    console.error(error);
-                    setError(true);
-                }
-            } finally {
-                if (isMounted) {
-                    setLoading(false);
-                }
-            }
-        }
-
-        fetchPostDetails();
-
+        fetchPostDetails(isMounted);
         return () => {
             isMounted = false;
         }
 
-    },[id]);
+    },[]);
+
+    async function fetchPostDetails(isMounted = true) {
+        setLoading(true);
+        setError(false);
+        try { const response = await axios.get(`http://localhost:8080/posts/${id}`, {headers: {
+                Authorization: `Bearer ${token}`
+            }});
+            if (isMounted) {
+                setDetails(response.data);
+                setResponses(response.data.responses);
+            }
+        } catch (error) {
+            if (isMounted) {
+                console.error(error);
+                setError(true);
+            }
+        } finally {
+            if (isMounted) {
+                setLoading(false);
+            }
+        }
+    }
 
     function handleChange(e) {
         setFormState({ ...formState, [e.target.name]: e.target.value });
@@ -77,13 +75,18 @@ function PostDetails() {
     function handleSubmit(e) {
         e.preventDefault();
         setError(false);
+
+        if (!formState.comment.trim()) {
+            setValidation({comment: true});
+            return;
+        }
+
         sendApplication(formState);
     }
 
     async function sendApplication() {
         try { const response = await axios.post(`http://localhost:8080/responses`, {
             "comment": formState.comment,
-            "createdAt": currentDate,
             "userId": storedUser.id,
             "postId": details.postId,
         }, {
@@ -94,6 +97,7 @@ function PostDetails() {
             if (response.status === 201) {
                 setShowSnackbar(true);
             }
+            await fetchPostDetails();
         } catch (error) {
             setError(true);
             console.log(error);
@@ -127,6 +131,8 @@ function PostDetails() {
                                 selected={selected}
                                 handleToggle={setSelected}
                             />
+                            {loading && <LoadingState/>}
+                            {error && <Snackbar variant={"error"} message={"Er is iets misgegaan, controleer of je verbonden bent met het internet"}/>}
                             <Card>
                                 <CardContent
                                     request={details.title}
@@ -155,6 +161,8 @@ function PostDetails() {
         )
     }
 
+    const sortedResponses = responses.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
     if (applications) {
         return (
                 <div className="post-detail-page">
@@ -178,18 +186,14 @@ function PostDetails() {
                                 selected={selected}
                                 handleToggle={setSelected}
                             />
-                            {responses && responses.length === 0 &&
+                            {loading && <LoadingState/>}
+                            {error && <Snackbar variant={"error"} message={"Er is iets misgegaan, controleer of je verbonden bent met het internet"}/>}
+                            {responses && sortedResponses.length === 0 &&
                                 <EmptyState
                                     message={"Nog geen reactie verstuurd"}
-                                    hasButton={true}
-                                    buttonText={"reageren"}
-                                    onClick={() => {
-                                        toggleDrawer(true)
-                                        setShowSnackbar(false)
-                                        formState.comment = "";
-                                    }}
+                                    hasButton={false}
                                 />}
-                            {responses && responses.length > 0 && responses.map((response) => (
+                            {responses && sortedResponses.length > 0 && sortedResponses.map((response) => (
                                 <Card
                                     key={response.responseId}
                                     buttons={
@@ -199,6 +203,7 @@ function PostDetails() {
                                         onClick={() => {
                                             toggleDrawer(true)
                                             setShowSnackbar(false)
+                                            setValidation({comment: false})
                                             formState.comment = "";
                                         }}
                                     />}
@@ -207,6 +212,19 @@ function PostDetails() {
                                     <p>{response.comment}</p>
                                 </Card>
                             ))}
+                        </div>
+                        <div className="footer">
+                            <Button
+                                variant="fab"
+                                hasIconLeft={true}
+                                iconName={"add"}
+                                onClick={() => {
+                                    toggleDrawer(true)
+                                    setShowSnackbar(false)
+                                    setValidation({comment: false})
+                                    formState.comment = "";
+                            }}
+                            />
                         </div>
                     </div>
                     <div className="upload-drawer">
