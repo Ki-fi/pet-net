@@ -29,6 +29,10 @@ function PostDetails() {
     const [responses, setResponses] = useState({});
     const [selected, setSelected] = React.useState('left');
     const [drawer, toggleDrawer] = React.useState(false);
+    const [showSnackbar, setShowSnackbar] = useState(false);
+    const token = localStorage.getItem('token');
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    let currentDate = new Date(Date.now());
     const [formState, setFormState] = useState({
         comment: "" })
 
@@ -73,6 +77,30 @@ function PostDetails() {
     function handleSubmit(e) {
         e.preventDefault();
         setError(false);
+        sendApplication(formState);
+    }
+
+    async function sendApplication() {
+        try { const response = await axios.post(`http://localhost:8080/responses`, {
+            "comment": formState.comment,
+            "createdAt": currentDate,
+            "userId": storedUser.id,
+            "postId": details.postId,
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+            if (response.status === 201) {
+                setShowSnackbar(true);
+            }
+        } catch (error) {
+            setError(true);
+            console.log(error);
+        } finally {
+            setLoading(false);
+            toggleDrawer(false);
+        }
     }
 
 
@@ -134,6 +162,12 @@ function PostDetails() {
                     <div className="content">
                         <PageBar pageTitle={"Post"} iconName={"arrow_back"}/>
                         <div className="cards-wrapper">
+                            {showSnackbar &&
+                                <Snackbar
+                                    variant={"default"}
+                                    message={"Reactie verstuurd!"}
+                                />
+                            }
                             <Card
                                 avatar={<Avatar upload={`http://localhost:8080${details.avatar}`}/>}
                                 title={`${details.firstName} ${details.preposition} ${details.lastName}`}
@@ -149,7 +183,11 @@ function PostDetails() {
                                     message={"Nog geen reactie verstuurd"}
                                     hasButton={true}
                                     buttonText={"reageren"}
-                                    onClick={() => toggleDrawer(true)}
+                                    onClick={() => {
+                                        toggleDrawer(true)
+                                        setShowSnackbar(false)
+                                        formState.comment = "";
+                                    }}
                                 />}
                             {responses && responses.length > 0 && responses.map((response) => (
                                 <Card
@@ -158,7 +196,11 @@ function PostDetails() {
                                     <Button
                                         variant={"primary"}
                                         buttonText={"reageren"}
-                                        onClick={() => {toggleDrawer(true)}}
+                                        onClick={() => {
+                                            toggleDrawer(true)
+                                            setShowSnackbar(false)
+                                            formState.comment = "";
+                                        }}
                                     />}
                                 >
                                     <p className="subtitle">{`${response.firstName} ${response.preposition} ${response.lastName} op ${formatDate(response.createdAt)}`}</p>
