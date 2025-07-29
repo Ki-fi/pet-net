@@ -92,6 +92,12 @@ function NewPost() {
     function handleService(e) {
         e.preventDefault();
         setError(false);
+
+        if (!formState.service.title.trim()) {
+            setValidation({service: true});
+            return;
+        }
+
         toggleDrawer(false);
         setServices(prev => [...prev, formState.service]);
         setFormState(prev => ({
@@ -107,7 +113,8 @@ function NewPost() {
             "endDate": formState.endDate,
             "title": formState.request,
             "remark": formState.remarks,
-            "userId": storedUser.id
+            "userId": storedUser.id,
+            "services" : services,
         }, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -207,7 +214,10 @@ function NewPost() {
                                             variant={"primary"}
                                             buttonText="Service toevoegen"
                                             type="button"
-                                            onClick={() => {toggleDrawer(true)}}
+                                            onClick={() => {
+                                                toggleDrawer(true)
+                                                setValidation({service: false})
+                                            }}
                                         />
                                         <Button
                                             variant={"secondary"}
@@ -219,7 +229,7 @@ function NewPost() {
                             >
                                 {services.length === 0 && <EmptyState message="Nog geen services"/>}
                                 {services.length >= 0 && services.map((service, index) => (
-                                    <div key={index}>
+                                    <div className="service-wrapper" key={index}>
                                         <p className="subtitle">{service.title}</p>
                                         <p>{service.description}</p>
                                     </div>
