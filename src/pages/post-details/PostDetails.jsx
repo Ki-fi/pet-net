@@ -161,7 +161,7 @@ function PostDetails() {
         )
     }
 
-    const sortedResponses = responses.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const sortedResponses = responses.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
 
     if (applications) {
         return (
@@ -190,25 +190,16 @@ function PostDetails() {
                             {error && <Snackbar variant={"error"} message={"Er is iets misgegaan, controleer of je verbonden bent met het internet"}/>}
                             {responses && sortedResponses.length === 0 &&
                                 <EmptyState
-                                    message={"Nog geen reactie verstuurd"}
+                                    message={"Nog geen reacties"}
                                     hasButton={false}
                                 />}
                             {responses && sortedResponses.length > 0 && sortedResponses.map((response) => (
                                 <Card
+                                    avatar={<Avatar upload={`http://localhost:8080${response.avatar}`}/>}
+                                    title={`${response.firstName} ${response.preposition} ${response.lastName}`}
                                     key={response.responseId}
-                                    buttons={
-                                    <Button
-                                        variant={"primary"}
-                                        buttonText={"reageren"}
-                                        onClick={() => {
-                                            toggleDrawer(true)
-                                            setShowSnackbar(false)
-                                            setValidation({comment: false})
-                                            formState.comment = "";
-                                        }}
-                                    />}
                                 >
-                                    <p className="subtitle">{`${response.firstName} ${response.preposition} ${response.lastName} op ${formatDate(response.createdAt)}`}</p>
+                                    <p className="subtitle">{`${response.firstName} op ${formatDate(response.createdAt)}`}</p>
                                     <p>{response.comment}</p>
                                 </Card>
                             ))}
