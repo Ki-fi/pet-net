@@ -24,7 +24,8 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    margin: 16px 0;
+    gap: 12px;
+    margin: 12px 0 16px 0;
 }
 
 .card-footer {

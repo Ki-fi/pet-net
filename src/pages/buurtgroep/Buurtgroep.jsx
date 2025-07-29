@@ -14,6 +14,7 @@ import EmptyState from "../../components/empty-state/EmptyState.jsx";
 import LoadingState from "../../components/loading-state/LoadingState.jsx";
 import formatDate from "../../helpers/formatDate.js";
 import filterPostsOnId from "../../helpers/filterPostsOnId.js";
+import Chip from "../../components/chip/Chip.jsx";
 
 
 function Buurtgroep() {
@@ -97,11 +98,17 @@ function Buurtgroep() {
                         />
                         }
                     >
+                        <div className="card-content">
                         <CardContent
                             request={post.title}
                             startDate={formatDate(post.startDate)}
                             endDate={formatDate(post.endDate)}
                         />
+                        <div className="chip-wrapper">
+                            {post.services.length >= 0 && post.services.map((service, index) => (
+                                <Chip chipText={service.title} key={index} />))}
+                        </div>
+                        </div>
                     </Card>
                     ))}
                 </div>

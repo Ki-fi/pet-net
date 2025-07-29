@@ -228,7 +228,7 @@ function NewPost() {
                                     </>}
                             >
                                 {services.length === 0 && <EmptyState message="Nog geen services"/>}
-                                {services.length >= 0 && services.map((service, index) => (
+                                {services.length > 0 && services.map((service, index) => (
                                     <div className="service-wrapper" key={index}>
                                         <p className="subtitle">{service.title}</p>
                                         <p>{service.description}</p>

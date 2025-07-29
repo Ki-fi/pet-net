@@ -8,12 +8,13 @@
 
 .chip-wrapper {
     display: flex;
-    gap: 4px;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .service-wrapper {
-    border: 2px solid black;
     border-radius: 4px;
     padding: 8px 12px;
-    max-width: 400px;
+    width: 100%;
+    background: var(--Text-light);
 }
