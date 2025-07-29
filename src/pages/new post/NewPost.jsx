@@ -292,8 +292,11 @@ function NewPost() {
                     {showSnackbar && step >= 5 &&
                         <div ref={cardRefs[5]}>
                             <Snackbar
-                        variant={"default"}
-                        message={"Post geplaatst!"}/>
+                                variant={"default"}
+                                message={"Post geplaatst!"}
+                                link={'/buurtgroep'}
+                                linkText={"Bekijk alle posts"}
+                            />
                         </div>}
 
                     {error && step >= 5 &&

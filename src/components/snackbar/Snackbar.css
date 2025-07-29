@@ -1,6 +1,9 @@
 
 
 .snackbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-radius: 4px;
     box-shadow: 0 4px 0 0 #3A393B;
     padding: 12px;
@@ -14,4 +17,18 @@
 
 .snackbar.error{
     background-color: var(--Brown-light);
+}
+
+.snackbar-link {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 1.25px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--Text-light);
+}
+
+.snackbar-link:hover {
+    color: var(--Text-light);
 }
