@@ -6,4 +6,9 @@
     padding-bottom: 24px;
 }
 
+.chip-wrapper {
+    display: flex;
+    gap: 4px;
+}
+
 
