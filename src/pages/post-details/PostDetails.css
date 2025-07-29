@@ -2,3 +2,12 @@
 .post-detail-page {
     display: flex;
 }
+
+@media screen and (max-width: 768px) {
+    .content {
+        padding-bottom: 72px;
+    }
+    .post-detail-page {
+        flex-direction: column;
+    }
+}
