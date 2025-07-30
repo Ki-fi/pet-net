@@ -2,7 +2,9 @@ import './Snackbar.css';
 
 function Snackbar({
     variant = "default",
-    message
+    message,
+    link,
+    linkText
 })
 
 {
@@ -10,6 +12,7 @@ function Snackbar({
     return (
         <div className={`snackbar ${variant}`}>
             <p>{message}</p>
+            <a className="snackbar-link" href={link}>{linkText}</a>
         </div>
     )
 }

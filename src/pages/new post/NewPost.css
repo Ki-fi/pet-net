@@ -6,4 +6,15 @@
     padding-bottom: 24px;
 }
 
+.chip-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
 
+.service-wrapper {
+    border-radius: 4px;
+    padding: 8px 12px;
+    width: 100%;
+    background: var(--Text-light);
+}

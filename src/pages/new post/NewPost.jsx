@@ -4,7 +4,7 @@ import PageBar from "../../components/page-bar/PageBar.jsx";
 import Card from "../../components/card/Card.jsx";
 import Button from "../../components/button/Button.jsx";
 import Input from "../../components/input/Input.jsx";
-import {useContext, useState} from "react";
+import React, {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import { useEffect, useRef } from "react";
 import Textarea from "../../components/textarea/Textarea.jsx";
@@ -14,6 +14,9 @@ import axios from "axios";
 import Snackbar from "../../components/snackbar/Snackbar.jsx";
 import formatDate from "../../helpers/formatDate.js";
 import {AuthContext} from "../../components/AuthContext.jsx";
+import Drawer from "../../components/drawer/Drawer.jsx";
+import EmptyState from "../../components/empty-state/EmptyState.jsx";
+import Chip from "../../components/chip/Chip.jsx";
 
 function NewPost() {
 
@@ -21,13 +24,16 @@ function NewPost() {
         request: "",
         startDate: "",
         endDate: "",
-        remarks: ""
+        remarks: "",
+        service: {title: "", description: ""},
     })
+    const [services, setServices] = useState([]);
     const [error, setError] = useState(false);
     const [validation, setValidation] = useState(false);
     const [loading, toggleLoading] = useState(false);
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
+    const [drawer, toggleDrawer] = React.useState(false);
     const [showSnackbar, setShowSnackbar] = useState(false);
     const token = localStorage.getItem('token');
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -46,8 +52,28 @@ function NewPost() {
         }
     }, [step]);
 
+    useEffect(() => {
+        console.log("Services:", services);
+    }, [services]);
+
     function handleChange(e) {
-        setFormState({ ...formState, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+
+        if (name === "service.title" || name === "service.description") {
+            const field = name.split(".")[1];
+            setFormState(prev => ({
+                ...prev,
+                service: {
+                    ...prev.service,
+                    [field]: value
+                }
+            }));
+        } else {
+            setFormState(prev => ({
+                ...prev,
+                [name]: value
+            }));
+        }
     }
 
     function handleSubmit(e) {
@@ -63,13 +89,32 @@ function NewPost() {
         }
     }
 
+    function handleService(e) {
+        e.preventDefault();
+        setError(false);
+
+        if (!formState.service.title.trim()) {
+            setValidation({service: true});
+            return;
+        }
+
+        toggleDrawer(false);
+        setServices(prev => [...prev, formState.service]);
+        setFormState(prev => ({
+            ...prev,
+            service: { title: "", description: "" }
+        }));
+        console.log(services);
+    }
+
     async function savePost() {
         try { const response = await axios.post("http://localhost:8080/posts", {
             "startDate": formState.startDate,
             "endDate": formState.endDate,
             "title": formState.request,
             "remark": formState.remarks,
-            "userId": storedUser.id
+            "userId": storedUser.id,
+            "services" : services,
         }, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -169,7 +214,10 @@ function NewPost() {
                                             variant={"primary"}
                                             buttonText="Service toevoegen"
                                             type="button"
-                                            onClick={() => {}}
+                                            onClick={() => {
+                                                toggleDrawer(true)
+                                                setValidation({service: false})
+                                            }}
                                         />
                                         <Button
                                             variant={"secondary"}
@@ -179,6 +227,14 @@ function NewPost() {
                                         />
                                     </>}
                             >
+                                {services.length === 0 && <EmptyState message="Nog geen services"/>}
+                                {services.length > 0 && services.map((service, index) => (
+                                    <div className="service-wrapper" key={index}>
+                                        <p className="subtitle">{service.title}</p>
+                                        <p>{service.description}</p>
+                                    </div>
+                                    ))
+                                }
                             </Card>
                             </div>
                         }
@@ -224,17 +280,23 @@ function NewPost() {
                                     request={formState.request}
                                     startDate={formatDate(formState.startDate)}
                                     endDate={formatDate(formState.endDate)}
-                                    service={formState.service}
-                                    remarks={formState.remarks}
                                 />
+                                <div className="chip-wrapper">
+                                {services.length >= 0 && services.map((service, index) => (
+                                    <Chip chipText={service.title} key={index} />))}
+                                </div>
+                                <p>{formState.remarks}</p>
                             </Card>
                             </div>
                         }
                     {showSnackbar && step >= 5 &&
                         <div ref={cardRefs[5]}>
                             <Snackbar
-                        variant={"default"}
-                        message={"Post geplaatst!"}/>
+                                variant={"default"}
+                                message={"Post geplaatst!"}
+                                link={'/buurtgroep'}
+                                linkText={"Bekijk alle posts"}
+                            />
                         </div>}
 
                     {error && step >= 5 &&
@@ -244,6 +306,51 @@ function NewPost() {
                         message={"Er is iets misgegaan, probeer nog een keer"}/>
                         </div>}
                     </form>
+                </div>
+                <div className="upload-drawer">
+                    {drawer === true && <Drawer
+                        title="Nieuwe service"
+                        buttons={
+                            <>
+                                <Button
+                                    type="button"
+                                    variant="secondary"
+                                    buttonText={"Annuleren"}
+                                    isDisabled={loading === true}
+                                    onClick={() => {toggleDrawer(false)}}
+                                />
+                                <Button
+                                    type="submit"
+                                    variant="primary"
+                                    buttonText={"Opslaan"}
+                                    isDisabled={loading === true}
+                                    form="service-form"
+                                />
+                            </>
+                        }
+                    >
+                        <form id="service-form" className="drawer-content" onSubmit={handleService}>
+                            <Input
+                                type="text"
+                                theme={"dark"}
+                                hasError={validation.service}
+                                errorMessage="Vul een service in"
+                                label="Service"
+                                value={formState.service.title}
+                                name="service.title"
+                                onChange={handleChange}
+                                placeholderText="Vul de naam van de taak in"
+                            />
+                            <Textarea
+                                theme={"dark"}
+                                value={formState.service.description}
+                                label={"Omschrijving"}
+                                name="service.description"
+                                placeholderText="Hoe moet deze taak worden uitgevoerd?"
+                                onChange={handleChange}
+                            />
+                        </form>
+                    </Drawer>}
                 </div>
             </div>
         </>

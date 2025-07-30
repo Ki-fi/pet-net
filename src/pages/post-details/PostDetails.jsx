@@ -140,12 +140,16 @@ function PostDetails() {
                                     endDate={formatDate(details.endDate)}
                                 />
                             </Card>
-                            {details.service &&
+                            {details.services.length > 0 && (
                                 <Card title={"Services"}>
-                                    <p className="subtitle">{details.service.title}</p>
-                                    <p>{details.service.body}</p>
+                                    {details.services.map((service, index) => (
+                                        <div className="service-wrapper" key={index}>
+                                            <p className="subtitle" key={index}>{service.title}</p>
+                                            <p>{service.description}</p>
+                                        </div>
+                                    ))}
                                 </Card>
-                            }
+                            )}
                             {details.remark &&
                                 <Card title={"Bijzonderheden"}>
                                     <p className="subtitle">Bijzonderheden:</p>
