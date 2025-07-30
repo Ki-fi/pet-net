@@ -3,11 +3,32 @@
     display: flex;
 }
 
+.content {
+    position: relative;
+}
+
+.post-detail-buttons {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: flex-end;
+    padding: 24px;
+    gap: 12px;
+    max-width: 800px;
+    width: 100%;
+    z-index: 2;
+    background: linear-gradient(to bottom, transparent 0, #CAD5D6 100%);
+}
+
+
 @media screen and (max-width: 768px) {
     .content {
         padding-bottom: 72px;
     }
     .post-detail-page {
         flex-direction: column;
+    }
+    .post-detail-buttons {
+        bottom: 72px;
     }
 }

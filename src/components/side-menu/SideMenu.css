@@ -11,6 +11,7 @@
     flex-basis: 100vh;
     background: var(--Grey);
     box-shadow: 8px 0 0 0 #464646;
+    z-index: 6;
 }
 
 .side-menu li {

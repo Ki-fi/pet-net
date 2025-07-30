@@ -157,8 +157,23 @@ function PostDetails() {
                                 </Card>
                             }
                         </div>
-                        <div className="footer">
-
+                        <div className="post-detail-buttons">
+                            <Button
+                                type={"button"}
+                                onClick={() => {}}
+                                hasIconLeft={true}
+                                variant={"destructive"}
+                                buttonText={""}
+                                iconName={"delete"}
+                            />
+                            <Button
+                                type={"button"}
+                                isDisabled={true}
+                                onClick={() => {}}
+                                hasIconLeft={false}
+                                variant={"primary"}
+                                buttonText={"Wijzigen"}
+                            />
                         </div>
                     </div>
                 </div>

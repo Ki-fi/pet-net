@@ -40,11 +40,7 @@
 }
 
 .footer {
-    position: relative;
-    display: flex;
-    justify-content: flex-end;
-    max-width: 800px;
-    width: 100%;
+
 }
 
 

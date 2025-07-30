@@ -53,6 +53,15 @@ button:disabled {
     background: #E5E5E5;
 }
 
+.destructive {
+    background: var(--Brown-light);
+}
+
+.destructive:hover {
+    background: #F28F6B;
+}
+
+
 .fab {
     position: absolute;
     bottom: 24px;
