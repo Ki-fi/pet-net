@@ -10,7 +10,7 @@ import Button from "../../components/button/Button.jsx";
 import CardContent from "../../components/card-content/CardContent.jsx";
 import {useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {useParams} from "react-router";
+import {Navigate, useParams} from "react-router";
 import axios from "axios";
 import formatDate from "../../helpers/formatDate.js";
 import EmptyState from "../../components/empty-state/EmptyState.jsx";
@@ -88,6 +88,7 @@ function PostDetails() {
     }
 
     async function sendApplication() {
+        setLoading(true);
         try { const response = await axios.post(`http://localhost:8080/responses`, {
             "comment": formState.comment,
             "userId": storedUser.id,
@@ -107,6 +108,25 @@ function PostDetails() {
         } finally {
             setLoading(false);
             toggleDrawer(false);
+        }
+    }
+
+    async function deletePost() {
+        setLoading(true);
+        try { const response = await axios.delete(`http://localhost:8080/posts/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+            if (response.status === 204) {
+                navigate('/buurtgroep');
+            }
+        } catch (error) {
+            setError(true);
+            console.log(error);
+        } finally {
+            setLoading(false);
+            toggleModal(false);
         }
     }
 
@@ -185,10 +205,10 @@ function PostDetails() {
                     { modal && (
                     <Modal
                         title={"Post verwijderen?"}
-                        body={"Weet je zeker dat je deze post wilt verwijderen? De post is dan niet meer zichtbaar."}
+                        body={"Weet je zeker dat je deze post wilt verwijderen? Dit kan niet ongedaan gemaakt worden."}
                         secondaryButtonText={"annuleren"}
                         primaryButtonText={"Verwijderen"}
-                        // onClickPrimaryButton={() => ()}
+                        onClickPrimaryButton={() => (deletePost())}
                         onClickSecondaryButton={() => (toggleModal(false))}
                     />
                     )}
