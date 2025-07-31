@@ -16,6 +16,8 @@ import formatDate from "../../helpers/formatDate.js";
 import EmptyState from "../../components/empty-state/EmptyState.jsx";
 import Drawer from "../../components/drawer/Drawer.jsx";
 import Textarea from "../../components/textarea/Textarea.jsx";
+import Modal from "../../components/modal/Modal.jsx";
+
 
 function PostDetails() {
 
@@ -30,6 +32,7 @@ function PostDetails() {
     const [responses, setResponses] = useState({});
     const [selected, setSelected] = React.useState('left');
     const [drawer, toggleDrawer] = React.useState(false);
+    const [modal, toggleModal] = React.useState(false);
     const [showSnackbar, setShowSnackbar] = useState(false);
     const token = localStorage.getItem('token');
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -113,6 +116,7 @@ function PostDetails() {
 
     const postDetails = selected === "left";
     const applications = selected === "right";
+    const hasButtons = details.creator === storedUser.id;
 
     if (postDetails) {
         return (
@@ -157,10 +161,11 @@ function PostDetails() {
                                 </Card>
                             }
                         </div>
+                        { hasButtons && (
                         <div className="post-detail-buttons">
                             <Button
                                 type={"button"}
-                                onClick={() => {}}
+                                onClick={() => {toggleModal(true)}}
                                 hasIconLeft={true}
                                 variant={"destructive"}
                                 buttonText={""}
@@ -175,7 +180,18 @@ function PostDetails() {
                                 buttonText={"Wijzigen"}
                             />
                         </div>
+                        )}
                     </div>
+                    { modal && (
+                    <Modal
+                        title={"Post verwijderen?"}
+                        body={"Weet je zeker dat je deze post wilt verwijderen? De post is dan niet meer zichtbaar."}
+                        secondaryButtonText={"annuleren"}
+                        primaryButtonText={"Verwijderen"}
+                        // onClickPrimaryButton={() => ()}
+                        onClickSecondaryButton={() => (toggleModal(false))}
+                    />
+                    )}
                 </div>
         )
     }
