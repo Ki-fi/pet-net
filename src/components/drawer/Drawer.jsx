@@ -1,7 +1,10 @@
 import './Drawer.css';
+import ReactDOM from 'react-dom';
 
 function Drawer({ title, children, buttons, footertext }) {
-    return (
+
+
+    return ReactDOM.createPortal (
         <>
             <div className="drawer">
                 <div className="drawer-content">
@@ -15,7 +18,8 @@ function Drawer({ title, children, buttons, footertext }) {
                     </div>
                 </div>
             </div>
-        </>
+        </>,
+    document.getElementById('drawer-root')
     )
 }
 
