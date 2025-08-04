@@ -17,6 +17,7 @@ import EmptyState from "../../components/empty-state/EmptyState.jsx";
 import Drawer from "../../components/drawer/Drawer.jsx";
 import Textarea from "../../components/textarea/Textarea.jsx";
 import Modal from "../../components/modal/Modal.jsx";
+import isDeletingAllowed from "../../helpers/isDeletingAllowed.js";
 
 
 function PostDetails() {
@@ -136,7 +137,7 @@ function PostDetails() {
 
     const postDetails = selected === "left";
     const applications = selected === "right";
-    const hasButtons = details.creator === storedUser.id;
+    const hasPermission = isDeletingAllowed(details, storedUser);
 
     if (postDetails) {
         return (
@@ -181,7 +182,7 @@ function PostDetails() {
                                 </Card>
                             }
                         </div>
-                        { hasButtons && (
+                        { hasPermission && (
                         <div className="post-detail-buttons">
                             <Button
                                 type={"button"}
