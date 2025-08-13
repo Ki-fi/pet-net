@@ -3,11 +3,11 @@ import Input from "/src/components/input/Input.jsx";
 import logo from "/src/assets/logo.png";
 import Button from "../../components/button/Button.jsx";
 import './Login.css';
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useContext, useState} from "react";
 import axios from "axios";
 import Snackbar from "../../components/snackbar/Snackbar.jsx";
-import validateCredentialsOnLogin from "../../helpers/validateCredentialsOnLogin.js";
+import validateCredentials from "../../helpers/validateCredentials.js";
 import {AuthContext} from "../../components/AuthContext.jsx";
 
 function Login() {
@@ -21,7 +21,6 @@ function Login() {
     const [error, setError] = useState(false);
     const [validation, setValidation] = useState(false);
     const [loading, toggleLoading] = useState(false);
-    const navigate = useNavigate();
 
     function handleChange(e) {
         setFormState({ ...formState, [e.target.name]: e.target.value });
@@ -31,7 +30,7 @@ function Login() {
         e.preventDefault();
         setError(false);
 
-        const validationResult = validateCredentialsOnLogin(formState);
+        const validationResult = validateCredentials(formState);
         setValidation(validationResult);
 
         if (!validationResult.hasErrors) {
@@ -60,7 +59,6 @@ function Login() {
     }
 
     return (
-        <>
             <div className="login-page">
                 <div className="login-background">
                     <img src={logo} alt="logo"/>
@@ -110,7 +108,6 @@ function Login() {
                     </form>
                 </Drawer>
             </div>
-        </>
     )
 }
 

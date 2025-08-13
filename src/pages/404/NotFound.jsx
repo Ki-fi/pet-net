@@ -8,7 +8,6 @@ function NotFound() {
     const navigate = useNavigate();
 
     return (
-        <>
             <div className="notfound-wrapper">
             <article className="notfound-snippet">
                 <img src={Mouse} alt="mouse-not-found"/>
@@ -21,7 +20,6 @@ function NotFound() {
                 />
             </article>
             </div>
-        </>
     )
 }
 

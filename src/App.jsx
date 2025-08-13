@@ -17,7 +17,6 @@ function App() {
     const {isAuth} = useContext(AuthContext);
 
   return (
-      <>
           <div className="page-container">
           <Routes>
               <Route path="/" element={<Navigate replace to="/login" />} />
@@ -31,7 +30,6 @@ function App() {
               <Route path="*" element={<NotFound />} />
           </Routes>
           </div>
-      </>
   )
 }
 

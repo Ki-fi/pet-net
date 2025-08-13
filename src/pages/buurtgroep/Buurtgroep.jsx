@@ -71,7 +71,6 @@ function Buurtgroep() {
     const sortedPosts = [...myPosts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
     return (
-        <>
             <div className="buurtgroep-page">
             <div className="menu-wrapper"><SideMenu /></div>
             <div className="content">
@@ -85,7 +84,7 @@ function Buurtgroep() {
                     />
                     {loading && <LoadingState/>}
                     {error && <Snackbar variant={"error"} message={"Er is iets misgegaan, controleer of je verbonden bent met het internet"}/>}
-                    {!error && !loading && sortedPosts.length === 0 && <EmptyState message={"Nog geen posts beschikbaar"}/>}
+                    {!error && !loading && sortedPosts.length === 0 && <EmptyState message={"Nog geen posts"}/>}
                     {!loading && sortedPosts.length > 0 && sortedPosts.map((post) => (
                     <Card
                         key={post.postId}
@@ -122,7 +121,6 @@ function Buurtgroep() {
                 </div>
             </div>
             </div>
-        </>
     )
 }
 

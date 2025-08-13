@@ -10,7 +10,7 @@ import Button from "../../components/button/Button.jsx";
 import CardContent from "../../components/card-content/CardContent.jsx";
 import {useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {Navigate, useParams} from "react-router";
+import {useParams} from "react-router";
 import axios from "axios";
 import formatDate from "../../helpers/formatDate.js";
 import EmptyState from "../../components/empty-state/EmptyState.jsx";
