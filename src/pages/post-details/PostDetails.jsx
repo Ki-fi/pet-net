@@ -16,6 +16,9 @@ import formatDate from "../../helpers/formatDate.js";
 import EmptyState from "../../components/empty-state/EmptyState.jsx";
 import Drawer from "../../components/drawer/Drawer.jsx";
 import Textarea from "../../components/textarea/Textarea.jsx";
+import Modal from "../../components/modal/Modal.jsx";
+import isDeletingAllowed from "../../helpers/isDeletingAllowed.js";
+
 
 function PostDetails() {
 
@@ -30,6 +33,7 @@ function PostDetails() {
     const [responses, setResponses] = useState({});
     const [selected, setSelected] = React.useState('left');
     const [drawer, toggleDrawer] = React.useState(false);
+    const [modal, toggleModal] = React.useState(false);
     const [showSnackbar, setShowSnackbar] = useState(false);
     const token = localStorage.getItem('token');
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -85,6 +89,7 @@ function PostDetails() {
     }
 
     async function sendApplication() {
+        setLoading(true);
         try { const response = await axios.post(`http://localhost:8080/responses`, {
             "comment": formState.comment,
             "userId": storedUser.id,
@@ -107,12 +112,32 @@ function PostDetails() {
         }
     }
 
+    async function deletePost() {
+        setLoading(true);
+        try { const response = await axios.delete(`http://localhost:8080/posts/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+            if (response.status === 204) {
+                navigate('/buurtgroep');
+            }
+        } catch (error) {
+            setError(true);
+            console.log(error);
+        } finally {
+            setLoading(false);
+            toggleModal(false);
+        }
+    }
+
 
     if (loading) return <LoadingState/>;
     if (error) return <Snackbar variant={"error"} message={"Er is iets misgegaan, controleer of je verbonden bent met het internet"}/>
 
     const postDetails = selected === "left";
     const applications = selected === "right";
+    const hasPermission = isDeletingAllowed(details, storedUser);
 
     if (postDetails) {
         return (
@@ -157,10 +182,37 @@ function PostDetails() {
                                 </Card>
                             }
                         </div>
-                        <div className="footer">
-
+                        { hasPermission && (
+                        <div className="post-detail-buttons">
+                            <Button
+                                type={"button"}
+                                onClick={() => {toggleModal(true)}}
+                                hasIconLeft={true}
+                                variant={"destructive"}
+                                buttonText={""}
+                                iconName={"delete"}
+                            />
+                            <Button
+                                type={"button"}
+                                isDisabled={true}
+                                onClick={() => {}}
+                                hasIconLeft={false}
+                                variant={"primary"}
+                                buttonText={"Wijzigen"}
+                            />
                         </div>
+                        )}
                     </div>
+                    { modal && (
+                    <Modal
+                        title={"Post verwijderen?"}
+                        body={"Weet je zeker dat je deze post wilt verwijderen? Dit kan niet ongedaan gemaakt worden."}
+                        secondaryButtonText={"annuleren"}
+                        primaryButtonText={"Verwijderen"}
+                        onClickPrimaryButton={() => (deletePost())}
+                        onClickSecondaryButton={() => (toggleModal(false))}
+                    />
+                    )}
                 </div>
         )
     }

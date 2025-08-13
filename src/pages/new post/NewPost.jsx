@@ -4,8 +4,7 @@ import PageBar from "../../components/page-bar/PageBar.jsx";
 import Card from "../../components/card/Card.jsx";
 import Button from "../../components/button/Button.jsx";
 import Input from "../../components/input/Input.jsx";
-import React, {useContext, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import React, {useState} from "react";
 import { useEffect, useRef } from "react";
 import Textarea from "../../components/textarea/Textarea.jsx";
 import validateNewPostInput from "../../helpers/validateNewPostInput.js";
@@ -13,7 +12,6 @@ import CardContent from "../../components/card-content/CardContent.jsx";
 import axios from "axios";
 import Snackbar from "../../components/snackbar/Snackbar.jsx";
 import formatDate from "../../helpers/formatDate.js";
-import {AuthContext} from "../../components/AuthContext.jsx";
 import Drawer from "../../components/drawer/Drawer.jsx";
 import EmptyState from "../../components/empty-state/EmptyState.jsx";
 import Chip from "../../components/chip/Chip.jsx";
@@ -31,7 +29,6 @@ function NewPost() {
     const [error, setError] = useState(false);
     const [validation, setValidation] = useState(false);
     const [loading, toggleLoading] = useState(false);
-    const navigate = useNavigate();
     const [step, setStep] = useState(1);
     const [drawer, toggleDrawer] = React.useState(false);
     const [showSnackbar, setShowSnackbar] = useState(false);
@@ -51,10 +48,6 @@ function NewPost() {
             ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }, [step]);
-
-    useEffect(() => {
-        console.log("Services:", services);
-    }, [services]);
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -104,7 +97,6 @@ function NewPost() {
             ...prev,
             service: { title: "", description: "" }
         }));
-        console.log(services);
     }
 
     async function savePost() {
@@ -134,7 +126,6 @@ function NewPost() {
     }
 
     return (
-        <>
             <div className="buurtgroep-page">
                 <div className="menu-wrapper"><SideMenu /></div>
                 <div className="content">
@@ -353,7 +344,6 @@ function NewPost() {
                     </Drawer>}
                 </div>
             </div>
-        </>
     )
 }
 

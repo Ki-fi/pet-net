@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 import Input from "../../components/input/Input.jsx";
 import Snackbar from "../../components/snackbar/Snackbar.jsx";
 import axios from "axios";
-import validateCredentialsOnSignup from "../../helpers/validateCredentialsOnSignup.js";
+import validateCredentials from "../../helpers/validateCredentials.js";
 
 function Signup() {
 
@@ -21,7 +21,6 @@ function Signup() {
     const [error, setError] = useState("");
     const [validation, setValidation] = useState(false);
     const [loading, toggleLoading] = useState(false);
-    const [newUserId, setNewUserId] = useState("");
     const navigate = useNavigate();
 
     function handleChange(e) {
@@ -32,7 +31,7 @@ function Signup() {
         e.preventDefault();
         setError("");
 
-        const validationResult = validateCredentialsOnSignup(formState);
+        const validationResult = validateCredentials(formState);
         setValidation(validationResult);
 
         if (!validationResult.hasErrors) {
@@ -50,7 +49,6 @@ function Signup() {
                     {headers: {
                             "Content-Type": "application/json"
                         }});
-                console.log(response.data);
                 navigate("/signup/welcome", {
                     state: {
                         firstName: formState.firstname
@@ -73,7 +71,6 @@ function Signup() {
     }
 
     return (
-        <>
             <section className="signup-section">
             <Card
                 title="Nieuw account"
@@ -158,7 +155,6 @@ function Signup() {
                 </form>
             </Card>
             </section>
-        </>
     )
 }
 

@@ -53,11 +53,20 @@ button:disabled {
     background: #E5E5E5;
 }
 
+.destructive {
+    background: var(--Brown-light);
+}
+
+.destructive:hover {
+    background: #F28F6B;
+}
+
+
 .fab {
-    position: absolute;
+    position: fixed;
     bottom: 24px;
     right: 24px;
-    z-index: 2;
+    z-index: 10;
     border-radius: 56px;
     background: var(--Blue-light);
     width: 56px;
@@ -66,4 +75,11 @@ button:disabled {
 
 .fab:hover {
     background: #9AB6DF;
+}
+
+@media screen and (max-width: 800px) {
+
+    .fab {
+        bottom: 100px;
+    }
 }

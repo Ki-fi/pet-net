@@ -39,20 +39,12 @@
     display: none;
 }
 
-.footer {
-    position: relative;
-    display: flex;
-    justify-content: flex-end;
-    max-width: 800px;
-    width: 100%;
-}
-
-
 
 @media screen and (max-width: 768px) {
     .content {
         padding-bottom: 72px;
     }
+
     .buurtgroep-page {
         flex-direction: column;
     }

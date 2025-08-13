@@ -1,5 +1,5 @@
 
-function validateCredentialsOnLogin({email, password}) {
+function validateCredentials({email, password}) {
     const errors = {};
 
     if (!email || !email.includes("@")) {
@@ -15,4 +15,4 @@ function validateCredentialsOnLogin({email, password}) {
     return errors;
 }
 
-export default validateCredentialsOnLogin;
+export default validateCredentials;

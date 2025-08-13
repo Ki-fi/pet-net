@@ -14,7 +14,6 @@ function SignupSuccess() {
     }
 
     return (
-        <>
             <section className="welcome-page">
                 <Card
                     title={"Welkom, " + firstName + "!"}
@@ -32,7 +31,6 @@ function SignupSuccess() {
                     <img src={Wave} alt="image of cat paw waving"/>
                 </Card>
             </section>
-        </>
     )
 }
 

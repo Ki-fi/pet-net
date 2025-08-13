@@ -9,5 +9,6 @@
     color: var(--Text-light);
     border-bottom: 8px solid #464642;
     width: 100%;
+    z-index: 8;
 }
 
