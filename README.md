@@ -9,7 +9,7 @@
 **Pet Net is a social platform that connects pet owners to local pet sitters, making pet sitting convenient, fast, and accessible. The Project consists of:**
 
 - **A Spring Boot backend, offering a REST API** https://github.com/Ki-fi/pet-net-backend
-- **A React frontend** (This repository)
+- **A React frontend** https://github.com/Ki-fi/pet-net (This repository)
 - **Project documentation** https://www.notion.so/Index-1fd40dda7e7280ce8dbac33c503cf3de
 <br/>
 
